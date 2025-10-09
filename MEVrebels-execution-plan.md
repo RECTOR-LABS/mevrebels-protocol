@@ -728,12 +728,12 @@
 **Story Points:** 3 SP
 
 **Tasks:**
-- [ ] **Task 5.4.1:** Apply BRAND.md color palette (#FF1744, #121212, etc.) - 0.5 SP
+- [ ] **Task 5.4.1:** Apply BRAND.md color palette (#E63946, #1D1D1D, #457B9D) - 0.5 SP
   - Status: ⏸️ Pending
   - Estimate: 2 hours
   - Dependencies: Story 5.1-5.3 UI complete
 
-- [ ] **Task 5.4.2:** Add MEVrebels logo and typography (Satoshi font) - 0.5 SP
+- [ ] **Task 5.4.2:** Add MEVrebels logo and typography (Inter/Roboto Mono per BRAND.md) - 0.5 SP
   - Status: ⏸️ Pending
   - Estimate: 2 hours
   - Dependencies: Task 5.4.1
@@ -875,12 +875,13 @@
 
 ### Epic 7: Documentation & Marketing - CRITICAL PATH
 **Priority:** P0 (Must Have)
-**Timeline:** Days 22-23 (October 29-30, 2025)
+**Timeline:** Days 21 (evening) - 23 (October 28-30, 2025)
 **Owner:** RECTOR
 **Status:** ⏸️ Not Started
 **Overall Progress:** [░░░░░░░░░░] 0%
 **Story Points:** 8 SP
-**Dependencies:** Epic 6 (Testing) complete, all features stable
+**Dependencies:** Epic 6 (Testing) in progress, can start docs in parallel with final testing
+**Note:** Starting documentation on Day 21 evening provides 1-day buffer for unexpected delays
 
 **Acceptance Criteria:**
 - [ ] README complete with setup instructions
@@ -891,7 +892,7 @@
 
 #### Story 7.1: Technical Documentation
 **Priority:** P0
-**Timeline:** Day 22 (October 29, 2025)
+**Timeline:** Day 21 evening - Day 22 morning (October 28-29, 2025)
 **Status:** ⏸️ Pending
 **Progress:** [░░░░░░░░░░] 0%
 **Story Points:** 3 SP

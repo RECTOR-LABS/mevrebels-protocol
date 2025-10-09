@@ -28,13 +28,14 @@ This project is a dual-purpose endeavor:
 - Win top 3 placement ($1,000 - $2,500 USDC)
 - Demonstrate real-world impact and technical excellence
 
-**Secondary Path: Investor Exit**
-- Position as acquisition target for:
-  - Staking Facilities (sponsor)
-  - Jito Labs (MEV infrastructure)
-  - Jupiter (DEX aggregator)
-  - Helius/QuickNode (RPC providers)
-  - DeFi VCs (a16z crypto, Multicoin, Jump)
+**Secondary Path: Strategic Partnerships & Seed Funding**
+- **Primary Focus**: Strategic partnerships over outright acquisition
+  - Jupiter (integrate flashloan arb as feature) - Most Likely
+  - Staking Facilities (validator integration pilot) - Hackathon Sponsor
+  - Solana Ventures, 6th Man, Multicoin (seed funding $100K-$250K)
+- **Secondary**: Acqui-hire opportunities
+  - Jito Labs / Helius (if strong hackathon traction)
+  - Compensation: $50K-$150K range (realistic for 23-day MVP)
 - Investor-ready documentation (PRD, execution plan, brand guidelines)
 - Scalable architecture beyond hackathon scope
 
@@ -565,7 +566,7 @@ dashboard/
 
 **Success Criteria:**
 1. **Hackathon**: Top 3 placement ($1,000 - $2,500)
-2. **Investor**: Acquisition offer >$50K (or partnership deal)
+2. **Partnerships**: Strategic partnership (Jupiter/Staking Facilities) or seed funding ($100K-$250K)
 3. **Community**: 100+ Discord members, 500+ Twitter followers
 4. **Technical**: 10+ profitable strategies, $10K+ volume executed
 
