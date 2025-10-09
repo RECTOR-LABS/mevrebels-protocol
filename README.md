@@ -7,8 +7,8 @@
 **Democratizing MEV Through Decentralized Arbitrage on Solana**
 
 [![GitHub Stars](https://img.shields.io/github/stars/RECTOR-LABS/mevrebels-protocol?style=for-the-badge&logo=github&color=E63946)](https://github.com/RECTOR-LABS/mevrebels-protocol)
-[![Hackathon](https://img.shields.io/badge/Hackathon-Superteam%20Cypherpunk-blueviolet?style=for-the-badge&logo=ethereum)](https://earn.superteam.fun/hackathon/cypherpunk)
-[![Prize Pool](https://img.shields.io/badge/Prize%20Pool-5%2C000%20USDC-00D4AA?style=for-the-badge&logo=tether)](https://earn.superteam.fun)
+[![Hackathon](https://img.shields.io/badge/Hackathon-Superteam%20Cypherpunk-blueviolet?style=for-the-badge&logo=solana)](https://earn.superteam.fun/hackathon/cypherpunk)
+[![Prize Pool](https://img.shields.io/badge/Prize%20Pool-5%2C000%20USDC-00D4AA?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIgZmlsbD0iIzI3NzVDQSIvPjxwYXRoIGQ9Ik0xMiA2VjE4TTkgOUgxMy41QzE0LjYgOSAxNS41IDkuOSAxNS41IDExQzE1LjUgMTIuMSAxNC42IDEzIDEzLjUgMTNIOC41IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==)](https://earn.superteam.fun)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](./LICENSE)
 
 [![Solana](https://img.shields.io/badge/Solana-14F195?style=for-the-badge&logo=solana&logoColor=black)](https://solana.com)
