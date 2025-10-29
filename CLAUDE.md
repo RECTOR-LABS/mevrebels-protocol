@@ -48,7 +48,7 @@ This project is a dual-purpose endeavor:
 
 ## Brand Guidelines
 
-**Full brand guidelines available in:** [`BRAND.md`](/BRAND.md)
+**Full brand guidelines available in:** [`BRAND.md`](/docs/BRAND.md)
 
 **Quick Reference:**
 - **Brand Personality**: Punky, rebellious, community-first, technically excellent
@@ -56,7 +56,7 @@ This project is a dual-purpose endeavor:
 - **Narrative**: Fighting MEV oligopoly, empowering individual traders/developers
 - **Investor Pitch**: Decentralized strategy marketplace disrupting centralized MEV bots
 
-When creating any user-facing content, marketing materials, or documentation, refer to `BRAND.md` for comprehensive brand guidelines.
+When creating any user-facing content, marketing materials, or documentation, refer to `docs/BRAND.md` for comprehensive brand guidelines.
 
 ## Tech Stack
 
@@ -353,12 +353,12 @@ dashboard/
 
 ## Important Files
 
-- **`BRAND.md`**: Comprehensive brand guidelines for MEVrebels (read for all user-facing content)
-- **`MEVrebels-strategy.md`**: Strategic analysis and technical approach (replaces bounty-analysis.md)
-- **`MEVrebels-PRD.md`**: Product Requirements Document with Epic/Story/Task structure (investor-ready)
-- **`MEVrebels-execution-plan.md`**: Progress tracking against PRD (daily updates)
+- **`docs/BRAND.md`**: Comprehensive brand guidelines for MEVrebels (read for all user-facing content)
+- **`docs/MEVrebels-strategy.md`**: Strategic analysis and technical approach (replaces bounty-analysis.md)
+- **`docs/MEVrebels-PRD.md`**: Product Requirements Document with Epic/Story/Task structure (investor-ready)
+- **`docs/MEVrebels-execution-plan.md`**: Progress tracking against PRD (daily updates)
 - **`README.md`**: Project overview and quick start guide
-- **`resources/RESOURCES.md`**: Curated links to Solana docs, Jupiter, flashloan protocols
+- **`docs/RESOURCES.md`**: Curated links to Solana docs, Jupiter, flashloan protocols
 
 ## Key Technical Considerations
 
@@ -554,15 +554,15 @@ dashboard/
 - Focus on demo quality - judges/investors need to see value immediately
 - "Punky/edgy" attitude matters - MEVrebels fights MEV oligopoly
 - Working code beats vaporware - ship functional prototypes early
-- Read `BRAND.md` for all user-facing content (maintain brand consistency)
-- Track progress in `MEVrebels-execution-plan.md` daily
-- Refer to `MEVrebels-PRD.md` for Epic/Story/Task structure
+- Read `docs/BRAND.md` for all user-facing content (maintain brand consistency)
+- Track progress in `docs/MEVrebels-execution-plan.md` daily
+- Refer to `docs/MEVrebels-PRD.md` for Epic/Story/Task structure
 
 **Decision Framework:**
-- If uncertain about feature priority: Check PRD Epic priority
-- If uncertain about branding: Read BRAND.md
-- If uncertain about technical approach: Read MEVrebels-strategy.md
-- If uncertain about progress: Update execution-plan.md
+- If uncertain about feature priority: Check docs/MEVrebels-PRD.md Epic priority
+- If uncertain about branding: Read docs/BRAND.md
+- If uncertain about technical approach: Read docs/MEVrebels-strategy.md
+- If uncertain about progress: Update docs/MEVrebels-execution-plan.md
 
 **Success Criteria:**
 1. **Hackathon**: Top 3 placement ($1,000 - $2,500)

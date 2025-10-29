@@ -110,15 +110,15 @@ anchor test
 ## 📚 Documentation
 
 ### Core Documents
-- **[BRAND.md](./BRAND.md)** - Comprehensive brand guidelines (investor-ready)
-- **[MEVrebels-strategy.md](./MEVrebels-strategy.md)** - Strategic blueprint and technical approach
-- **[MEVrebels-PRD.md](./MEVrebels-PRD.md)** - Product Requirements (Epic/Story/Task structure)
-- **[MEVrebels-execution-plan.md](./MEVrebels-execution-plan.md)** - Daily progress tracking
+- **[BRAND.md](./docs/BRAND.md)** - Comprehensive brand guidelines (investor-ready)
+- **[MEVrebels-strategy.md](./docs/MEVrebels-strategy.md)** - Strategic blueprint and technical approach
+- **[MEVrebels-PRD.md](./docs/MEVrebels-PRD.md)** - Product Requirements (Epic/Story/Task structure)
+- **[MEVrebels-execution-plan.md](./docs/MEVrebels-execution-plan.md)** - Daily progress tracking
 - **[CLAUDE.md](./CLAUDE.md)** - Project instructions for AI agents
 
 ### Reference
-- **[bounty-original.md](./bounty-original.md)** - Original bounty requirements
-- **[resources/RESOURCES.md](./resources/RESOURCES.md)** - Curated links and references
+- **[bounty-original.md](./docs/bounty-original.md)** - Original bounty requirements
+- **[RESOURCES.md](./docs/RESOURCES.md)** - Curated links and references
 
 ---
 
@@ -408,11 +408,14 @@ Democratized
 ```
 mevrebels-protocol/
 ├── README.md                      # This file
-├── BRAND.md                       # Brand guidelines
 ├── CLAUDE.md                      # AI agent instructions
-├── MEVrebels-strategy.md          # Strategic blueprint
-├── MEVrebels-PRD.md              # Product requirements
-├── MEVrebels-execution-plan.md   # Progress tracker
+├── docs/                          # Documentation
+│   ├── BRAND.md                   # Brand guidelines
+│   ├── MEVrebels-strategy.md      # Strategic blueprint
+│   ├── MEVrebels-PRD.md          # Product requirements
+│   ├── MEVrebels-execution-plan.md # Progress tracker
+│   ├── bounty-original.md         # Original bounty requirements
+│   └── RESOURCES.md               # Curated links and references
 ├── programs/                      # Solana programs (Anchor)
 │   ├── strategy-registry/        # Strategy management
 │   ├── execution-engine/         # Flashloan + Jupiter execution
@@ -425,7 +428,6 @@ mevrebels-protocol/
 │   ├── src/app/                  # App Router pages
 │   ├── src/components/           # React components
 │   └── src/lib/                  # Utilities
-├── resources/                     # Reference materials
 └── tests/                         # Integration tests
 ```
 
@@ -509,7 +511,7 @@ mevrebels-protocol/
 - **Colors**: Rebellious Red (#E63946), Midnight Black (#1D1D1D), Trust Blue (#457B9D)
 - **Personality**: Punky, rebellious, community-first, technically excellent
 
-See [BRAND.md](./BRAND.md) for comprehensive brand guidelines.
+See [BRAND.md](./docs/BRAND.md) for comprehensive brand guidelines.
 
 ---
 
