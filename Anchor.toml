@@ -8,6 +8,7 @@ skip-lint = false
 [programs.localnet]
 strategy_registry = "6JSrB5FXwC9WxPsY1s7w1wnK51TzjX4mwQ9PEiTUzxC1"
 execution_engine = "ExecRebe1sEngineMocKF1ash1oanArbitrageV1111"
+dao_governance = "CXkpLkkHiCTJ9ZcxRbc23cR7kQpKGeYxDy2z7xqWd1r8"
 
 [registry]
 url = "https://api.apr.dev"

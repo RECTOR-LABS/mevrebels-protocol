@@ -2,6 +2,10 @@ use anchor_lang::prelude::*;
 use crate::state::*;
 use crate::constants::*;
 use crate::error::ExecutionError;
+use dao_governance::{
+    program::DaoGovernance,
+    cpi::accounts::DepositTreasury as DaoDepositTreasury,
+};
 
 /// Execute arbitrage strategy with mock flashloan
 ///
@@ -39,12 +43,15 @@ pub struct ExecuteStrategy<'info> {
     #[account(mut)]
     pub executor: Signer<'info>,
 
-    /// Treasury (receives 20% of profit)
+    /// Treasury (receives 20% of profit) - DAO Treasury PDA
     #[account(
         mut,
         address = profit_config.treasury
     )]
     pub treasury: SystemAccount<'info>,
+
+    /// DAO Governance program for treasury deposit CPI
+    pub dao_governance_program: Program<'info, DaoGovernance>,
 
     /// Strategy registry program for CPI
     pub strategy_registry_program: Program<'info, strategy_registry::program::StrategyRegistry>,
@@ -142,12 +149,29 @@ pub fn handler(
     )?;
 
     // Transfer treasury share
+    let vault_bump = vault.bump;
     transfer_lamports(
         &vault.to_account_info(),
         &ctx.accounts.treasury.to_account_info(),
         treasury_share,
-        &[&[ExecutionVault::SEEDS_PREFIX, &[vault.bump]]],
+        &[&[ExecutionVault::SEEDS_PREFIX, &[vault_bump]]],
     )?;
+
+    // Drop mutable borrow before CPI
+    drop(vault);
+
+    // CPI to DAO governance to record treasury deposit
+    deposit_to_dao_treasury(
+        ctx.accounts.dao_governance_program.to_account_info(),
+        ctx.accounts.treasury.to_account_info(),
+        ctx.accounts.vault.to_account_info(),
+        ctx.accounts.system_program.to_account_info(),
+        treasury_share,
+        vault_bump,
+    )?;
+
+    // Re-borrow vault for stats update
+    let vault = &mut ctx.accounts.vault;
 
     // Step 6: Update vault stats
     vault.total_executions = vault
@@ -325,6 +349,41 @@ fn update_strategy_metrics<'info>(
     strategy_registry::cpi::update_metrics(cpi_ctx, profit, true)?;
 
     msg!("Updated strategy metrics via CPI");
+
+    Ok(())
+}
+
+/// Deposit to DAO treasury via CPI to dao-governance program
+/// Records the treasury deposit in DAO governance tracking
+fn deposit_to_dao_treasury<'info>(
+    dao_governance_program: AccountInfo<'info>,
+    treasury_account: AccountInfo<'info>,
+    vault_account: AccountInfo<'info>,
+    system_program: AccountInfo<'info>,
+    amount: u64,
+    vault_bump: u8,
+) -> Result<()> {
+    // Build CPI context
+    let cpi_accounts = DaoDepositTreasury {
+        treasury: treasury_account,
+        depositor: vault_account.clone(),
+        system_program,
+    };
+
+    let vault_seed = ExecutionVault::SEEDS_PREFIX;
+    let bump = &[vault_bump];
+    let signer_seeds: &[&[&[u8]]] = &[&[vault_seed, bump]];
+
+    let cpi_ctx = CpiContext::new_with_signer(
+        dao_governance_program,
+        cpi_accounts,
+        signer_seeds,
+    );
+
+    // Call deposit_treasury instruction
+    dao_governance::cpi::deposit_treasury(cpi_ctx, amount)?;
+
+    msg!("Deposited {} lamports to DAO treasury via CPI", amount);
 
     Ok(())
 }

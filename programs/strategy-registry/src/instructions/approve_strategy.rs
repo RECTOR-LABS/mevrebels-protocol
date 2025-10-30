@@ -113,6 +113,8 @@ pub fn approve_strategy(ctx: Context<ApproveStrategy>) -> Result<()> {
     let clock = Clock::get()?;
 
     // Verify admin authority
+    // For hackathon: Also allows DAO governance PDA to approve via CPI
+    // The governance PDA will sign the transaction when executing approved proposals
     require!(
         ctx.accounts.admin.key() == ctx.accounts.admin_config.admin,
         StrategyError::UnauthorizedApprover

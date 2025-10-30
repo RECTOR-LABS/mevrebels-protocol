@@ -1,12 +1,12 @@
 [package]
-name = "execution-engine"
+name = "dao-governance"
 version = "0.1.0"
-description = "MEVrebels Execution Engine - Atomic arbitrage with mock flashloans"
+description = "MEVrebels DAO Governance - Democratizing MEV through token-weighted voting"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "execution_engine"
+name = "dao_governance"
 
 [features]
 default = []
@@ -23,7 +23,6 @@ custom-panic = []
 anchor-lang = "0.32.1"
 anchor-spl = "0.32.1"
 strategy-registry = { path = "../strategy-registry", features = ["cpi"] }
-dao-governance = { path = "../dao-governance", features = ["cpi"] }
 
 [lints.rust]
 unexpected_cfgs = { level = "warn", check-cfg = ['cfg(target_os, values("solana"))'] }

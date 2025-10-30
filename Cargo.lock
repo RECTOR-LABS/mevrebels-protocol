@@ -613,6 +613,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "dao-governance"
+version = "0.1.0"
+dependencies = [
+ "anchor-lang",
+ "anchor-spl",
+ "strategy-registry",
+]
+
+[[package]]
 name = "derivation-path"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -656,6 +665,7 @@ version = "0.1.0"
 dependencies = [
  "anchor-lang",
  "anchor-spl",
+ "dao-governance",
  "strategy-registry",
 ]
 
