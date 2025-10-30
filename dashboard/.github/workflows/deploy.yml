@@ -1,0 +1,119 @@
+name: Build and Deploy MEVrebels Dashboard
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'dashboard/**'
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: rector-labs/mevrebels-dashboard
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,prefix={{branch}}-
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./dashboard
+          file: ./dashboard/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to VPS (Blue-Green Strategy)
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script: |
+            # Navigate to deployment directory
+            cd /home/mevrebels/dashboard || exit 1
+
+            # Pull latest image from GHCR
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            docker pull ghcr.io/rector-labs/mevrebels-dashboard:latest
+
+            # Determine active deployment (blue or green)
+            ACTIVE=$(docker ps --filter "label=com.mevrebels.deployment" --format "{{.Labels}}" | grep -oP 'blue|green' | head -1)
+
+            if [ -z "$ACTIVE" ]; then
+              ACTIVE="green"  # Default to green if no active deployment
+            fi
+
+            # Determine standby deployment
+            if [ "$ACTIVE" = "blue" ]; then
+              STANDBY="green"
+              STANDBY_PORT=3001
+            else
+              STANDBY="blue"
+              STANDBY_PORT=3000
+            fi
+
+            echo "Active deployment: $ACTIVE"
+            echo "Standby deployment: $STANDBY"
+
+            # Start standby container with new image
+            docker-compose up -d mevrebels-$STANDBY
+
+            # Wait for standby to be healthy
+            echo "Waiting for $STANDBY to be healthy..."
+            sleep 10
+
+            # Health check on standby
+            if curl -f http://localhost:$STANDBY_PORT > /dev/null 2>&1; then
+              echo "$STANDBY is healthy. Switching traffic..."
+
+              # Update Traefik labels to route traffic to standby
+              docker stop mevrebels-$ACTIVE
+              docker rm mevrebels-$ACTIVE
+
+              # Rename standby to active
+              docker-compose up -d mevrebels-$STANDBY
+
+              echo "Deployment successful! Traffic switched to $STANDBY"
+            else
+              echo "Health check failed for $STANDBY. Rolling back..."
+              docker stop mevrebels-$STANDBY
+              docker rm mevrebels-$STANDBY
+              exit 1
+            fi
+
+            # Cleanup old images
+            docker image prune -af --filter "until=24h"

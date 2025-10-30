@@ -1,0 +1,115 @@
+version: '3.8'
+
+# Simplified deployment without Rust services (temporary)
+# Deploy API Server + Analytics only while we fix Rust dependency issues
+
+services:
+  # PostgreSQL with TimescaleDB extension
+  postgres:
+    image: timescale/timescaledb:latest-pg15
+    container_name: mevrebels-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ***REMOVED***
+      POSTGRES_DB: mevrebels
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mevrebels-network
+
+  # Redis for caching and pub/sub
+  redis:
+    image: redis:7-alpine
+    container_name: mevrebels-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ***REMOVED***
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mevrebels-network
+
+  # API Server (Node.js/TypeScript)
+  api-server:
+    build:
+      context: ./api-server
+      dockerfile: Dockerfile
+    container_name: mevrebels-api-server
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      WS_PORT: 3002
+      DATABASE_URL: postgresql://postgres:***REMOVED***@postgres:5432/mevrebels
+      REDIS_URL: redis://:***REMOVED***@redis:6379
+      HELIUS_RPC: ${HELIUS_DEVNET_RPC}
+      STRATEGY_REGISTRY_PROGRAM_ID: RECjnbr96LG2mDTXzhB5ZVY4JRfnSKmtx1pCgrGbMws
+      EXECUTION_ENGINE_PROGRAM_ID: REC2Aq9iAu4hu7efgJhtyFyWS1bSBDYgeoVXXQFtfpk
+      DAO_GOVERNANCE_PROGRAM_ID: RECwcpcHwBeDAV7tBvUuhJzsih16BaveZRC74kbBkSS
+      FLASH_LOAN_PROGRAM_ID: REChcXRRzBxhLvjs4v1HZ1Zx3R6hUnTEVjdKDwwbT9w
+    ports:
+      - "3011:3001"  # HTTP API
+      - "3012:3002"  # WebSocket
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - mevrebels-network
+
+  # Analytics Service (Python)
+  analytics:
+    build:
+      context: ./analytics
+      dockerfile: Dockerfile
+    container_name: mevrebels-analytics
+    restart: unless-stopped
+    environment:
+      PYTHONUNBUFFERED: 1
+      PORT: 3004
+      DATABASE_URL: postgresql://postgres:***REMOVED***@postgres:5432/mevrebels
+      REDIS_URL: redis://:***REMOVED***@redis:6379
+      HELIUS_DEVNET_RPC: ${HELIUS_DEVNET_RPC}
+      HELIUS_WEBHOOK_SECRET: ${HELIUS_WEBHOOK_SECRET}
+      STRATEGY_REGISTRY_PROGRAM_ID: RECjnbr96LG2mDTXzhB5ZVY4JRfnSKmtx1pCgrGbMws
+      EXECUTION_ENGINE_PROGRAM_ID: REC2Aq9iAu4hu7efgJhtyFyWS1bSBDYgeoVXXQFtfpk
+      DAO_GOVERNANCE_PROGRAM_ID: RECwcpcHwBeDAV7tBvUuhJzsih16BaveZRC74kbBkSS
+      FLASH_LOAN_PROGRAM_ID: REChcXRRzBxhLvjs4v1HZ1Zx3R6hUnTEVjdKDwwbT9w
+      POLLING_INTERVAL_SECONDS: 5
+      LOG_LEVEL: INFO
+    ports:
+      - "3014:3004"  # Analytics API
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - mevrebels-network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  mevrebels-network:
+    driver: bridge

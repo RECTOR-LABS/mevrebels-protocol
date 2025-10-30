@@ -10,7 +10,7 @@ pub use error::*;
 pub use instructions::*;
 pub use state::*;
 
-declare_id!("CXkpLkkHiCTJ9ZcxRbc23cR7kQpKGeYxDy2z7xqWd1r8");
+declare_id!("RECwcpcHwBeDAV7tBvUuhJzsih16BaveZRC74kbBkSS");
 
 #[program]
 pub mod dao_governance {

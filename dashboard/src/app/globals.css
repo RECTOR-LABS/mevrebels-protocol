@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Roboto+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* MEVrebels Brand Colors - Dark Mode First */
+    --background: #1D1D1D; /* Midnight Black */
+    --foreground: #FFFFFF; /* Pure White */
+    --primary: #E63946; /* Rebellious Red */
+    --secondary: #457B9D; /* Trust Blue */
+    --success: #06D6A0; /* Profit Green */
+    --warning: #F4A261; /* Warning Orange */
+    --muted: #6C757D; /* Neutral Gray */
+    --border: #2D2D2D;
+    --card: #1D1D1D;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-bold;
+  }
+
+  /* Brand-specific typography */
+  .font-data {
+    @apply font-mono;
+  }
+
+  .font-code {
+    @apply font-code;
+  }
+}
+
+@layer components {
+  /* MEVrebels branded button */
+  .btn-rebellious {
+    @apply bg-rebellious text-white hover:bg-rebellious/90 font-semibold px-4 py-2 rounded-md transition-colors;
+  }
+
+  /* Trust blue for informational elements */
+  .text-trust {
+    @apply text-trust-blue;
+  }
+
+  /* Profit green for positive metrics */
+  .text-profit {
+    @apply text-profit-green;
+  }
+
+  /* Card styling */
+  .card-dark {
+    @apply bg-midnight-black border border-border rounded-lg;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Cyberpunk-inspired glow effects */
+  .glow-red {
+    box-shadow: 0 0 20px rgba(230, 57, 70, 0.3);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 20px rgba(69, 123, 157, 0.3);
+  }
+
+  .glow-green {
+    box-shadow: 0 0 20px rgba(6, 214, 160, 0.3);
+  }
+}

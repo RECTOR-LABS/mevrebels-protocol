@@ -10,7 +10,7 @@ pub use error::*;
 pub use instructions::*;
 pub use state::*;
 
-declare_id!("F1agXX4p3jFV6ASqqv4ZfTNvW94WtJiinvhKH8NZ77VG");
+declare_id!("REChcXRRzBxhLvjs4v1HZ1Zx3R6hUnTEVjdKDwwbT9w");
 
 #[program]
 pub mod flash_loan {

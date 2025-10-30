@@ -20,7 +20,7 @@ This project is a dual-purpose endeavor:
 - **Deadline**: October 30, 2025
 - **Current Competition**: 2 submissions
 - **Strategy**: MEVrebels (ArbitrageDAO architecture) - self-contained, no validator dependency
-- **Current Status**: Day 23 - Final Push (83% test coverage, WSOL flash loans working)
+- **Current Status**: Day 23 - PRODUCTION READY (Backend Live, Dashboard Complete, 51% overall completion)
 
 ## Strategic Approach
 
@@ -50,7 +50,7 @@ This project is a dual-purpose endeavor:
 
 ## Brand Guidelines
 
-**Full brand guidelines available in:** [`BRAND.md`](/docs/BRAND.md)
+**Full brand guidelines available in:** [`BRAND.md`](docs/brand/BRAND.md)
 
 **Quick Reference:**
 - **Brand Personality**: Punky, rebellious, community-first, technically excellent
@@ -58,7 +58,7 @@ This project is a dual-purpose endeavor:
 - **Narrative**: Fighting MEV oligopoly, empowering individual traders/developers
 - **Investor Pitch**: Decentralized strategy marketplace disrupting centralized MEV bots
 
-When creating any user-facing content, marketing materials, or documentation, refer to `docs/BRAND.md` for comprehensive brand guidelines.
+When creating any user-facing content, marketing materials, or documentation, refer to `docs/brand/BRAND.md` for comprehensive brand guidelines.
 
 ## Tech Stack
 
@@ -73,31 +73,41 @@ When creating any user-facing content, marketing materials, or documentation, re
   - DAO Governance Program (voting, profit distribution) ✅ COMPLETE
   - Flash Loan Program (custom WSOL flash loans) ✅ COMPLETE
 
-### Backend Services (Off-Chain)
+### Backend Services (Off-Chain) ✅ PRODUCTION
 
-- **Opportunity Detection**: Rust (pool monitoring, price analysis)
-- **Strategy Analytics**: Python (performance tracking, ML-based scoring)
-- **API Server**: Node.js/TypeScript (REST API, WebSocket)
-- **Database**: PostgreSQL (strategy data, performance metrics)
-- **Cache**: Redis (hot opportunities, real-time data)
-- **Message Queue**: Redis Streams (opportunity broadcasting)
+- **API Server**: Node.js/TypeScript (REST API, WebSocket) ✅ DEPLOYED
+- **Analytics Service**: Python/FastAPI (performance tracking, metrics) ✅ DEPLOYED
+- **Database**: PostgreSQL 15 + TimescaleDB (time-series data) ✅ DEPLOYED
+- **Cache**: Redis 7 (caching, pub/sub) ✅ DEPLOYED
+- **Pool Monitor**: Rust (Raydium/Orca/Meteora integration) ⏳ NOT DEPLOYED (dependency conflicts)
+- **Transaction Monitor**: Rust (Geyser webhooks, alerts) ⏳ NOT DEPLOYED (dependency conflicts)
 
-### Frontend (Dashboard)
+### Frontend (Dashboard) ✅ COMPLETE
 
-- **Framework**: Next.js 14 (App Router)
-- **Wallet Integration**: Solana Wallet Adapter v2
-- **UI Library**: shadcn/ui + Tailwind CSS (consistent with brand)
-- **State Management**: Zustand
-- **Real-time**: WebSocket + SWR for live updates
-- **Charts**: Recharts or TradingView Lightweight Charts
+- **Framework**: Next.js 14 (App Router) ✅
+- **Wallet Integration**: Solana Wallet Adapter v2 (Phantom, Solflare, Coinbase) ✅
+- **UI Library**: Custom components + Tailwind CSS (MEVrebels brand) ✅
+- **Forms**: React Hook Form + Zod validation ✅
+- **Features Deployed**:
+  - Strategy Marketplace (filtering, sorting, search) ✅
+  - Strategy Creation Form (validation, preview) ✅
+  - DAO Governance (voting UI, proposals) ✅
+  - Analytics Dashboard (metrics, leaderboard) ✅
+  - Toast notifications & loading states ✅
+- **Deployment**: Docker + GitHub Actions + Blue-Green CI/CD ✅
+- **Documentation**: README, DEPLOYMENT.md, DNS-SETUP.md ✅
 
-### Infrastructure
+### Infrastructure ✅ PRODUCTION
 
-- **RPC Providers**: Helius, QuickNode, or Triton (mainnet/devnet)
-- **Hosting**: Railway, Render, or Fly.io
-- **Monitoring**: Grafana + Prometheus
-- **CI/CD**: GitHub Actions
-- **Flashloan Providers**: Solend, marginfi
+- **Production API**: https://api.mevrebels.rectorspace.com ✅ LIVE
+- **WebSocket**: wss://api.mevrebels.rectorspace.com/ws ✅ LIVE
+- **SSL/TLS**: Let's Encrypt with auto-renewal ✅
+- **Reverse Proxy**: Nginx with rate limiting (100 req/s) ✅
+- **RPC Provider**: Helius Devnet RPC ✅
+- **Hosting**: VPS with Docker (176.222.53.185) ✅
+- **Container Registry**: GitHub Container Registry (GHCR) ✅ DASHBOARD ONLY
+- **Flash Loans**: Custom WSOL implementation on devnet ✅
+- **Deployment**: Docker Compose with health checks ✅
 
 ### Package Manager
 
@@ -175,6 +185,98 @@ npm run test:integration
 
 # Performance testing
 k6 run tests/load-test.js
+
+# Backend integration tests
+bash backend/tests/integration-test.sh
+```
+
+## Production API Endpoints
+
+**Base URL**: `https://api.mevrebels.rectorspace.com`
+
+### Health Checks
+
+```bash
+# API Server health
+curl https://api.mevrebels.rectorspace.com/health
+
+# Analytics Service health
+curl https://api.mevrebels.rectorspace.com/analytics/health
+```
+
+### Strategy Management
+
+```bash
+# List all strategies
+curl https://api.mevrebels.rectorspace.com/api/strategies
+
+# Get specific strategy
+curl https://api.mevrebels.rectorspace.com/api/strategies/{id}
+
+# Create new strategy (POST)
+curl -X POST https://api.mevrebels.rectorspace.com/api/strategies \
+  -H "Content-Type: application/json" \
+  -d '{"name":"My Strategy","description":"...","parameters":{...}}'
+```
+
+### Execution History
+
+```bash
+# List all executions
+curl https://api.mevrebels.rectorspace.com/api/executions
+
+# Get specific execution
+curl https://api.mevrebels.rectorspace.com/api/executions/{id}
+
+# List executions for a strategy
+curl https://api.mevrebels.rectorspace.com/api/executions?strategy_id={id}
+```
+
+### DAO Governance
+
+```bash
+# List all proposals
+curl https://api.mevrebels.rectorspace.com/api/proposals
+
+# Get specific proposal
+curl https://api.mevrebels.rectorspace.com/api/proposals/{id}
+
+# Create proposal (POST)
+curl -X POST https://api.mevrebels.rectorspace.com/api/proposals \
+  -H "Content-Type: application/json" \
+  -d '{"title":"...","description":"...","type":"strategy_approval"}'
+```
+
+### Analytics
+
+```bash
+# Strategy statistics
+curl https://api.mevrebels.rectorspace.com/analytics/strategies/stats
+
+# Execution statistics
+curl https://api.mevrebels.rectorspace.com/analytics/executions/stats
+
+# Leaderboard
+curl https://api.mevrebels.rectorspace.com/analytics/leaderboard
+```
+
+### WebSocket (Real-time Updates)
+
+```javascript
+const ws = new WebSocket('wss://api.mevrebels.rectorspace.com/ws');
+
+ws.onopen = () => {
+  // Subscribe to strategy updates
+  ws.send(JSON.stringify({ type: 'subscribe', channel: 'strategies' }));
+
+  // Subscribe to execution updates
+  ws.send(JSON.stringify({ type: 'subscribe', channel: 'executions' }));
+};
+
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  console.log('Received:', data);
+};
 ```
 
 ## Project Architecture - MEVrebels
@@ -363,10 +465,10 @@ dashboard/
 
 ## Important Files
 
-- **`docs/BRAND.md`**: Comprehensive brand guidelines for MEVrebels (read for all user-facing content)
-- **`docs/MEVrebels-strategy.md`**: Strategic analysis and technical approach (replaces bounty-analysis.md)
-- **`docs/MEVrebels-PRD.md`**: Product Requirements Document with Epic/Story/Task structure (investor-ready)
-- **`docs/MEVrebels-execution-plan.md`**: Progress tracking against PRD (daily updates)
+- **`docs/brand/BRAND.md`**: Comprehensive brand guidelines for MEVrebels (read for all user-facing content)
+- **`docs/planning/MEVrebels-strategy.md`**: Strategic analysis and technical approach (replaces bounty-analysis.md)
+- **`docs/planning/MEVrebels-PRD.md`**: Product Requirements Document with Epic/Story/Task structure (investor-ready)
+- **`docs/planning/MEVrebels-execution-plan.md`**: Progress tracking against PRD (daily updates)
 - **`README.md`**: Project overview and quick start guide
 - **`docs/RESOURCES.md`**: Curated links to Solana docs, Jupiter, flashloan protocols
 
@@ -573,15 +675,15 @@ dashboard/
 - Focus on demo quality - judges/investors need to see value immediately
 - "Punky/edgy" attitude matters - MEVrebels fights MEV oligopoly
 - Working code beats vaporware - ship functional prototypes early
-- Read `docs/BRAND.md` for all user-facing content (maintain brand consistency)
-- Track progress in `docs/MEVrebels-execution-plan.md` daily
-- Refer to `docs/MEVrebels-PRD.md` for Epic/Story/Task structure
+- Read `docs/brand/BRAND.md` for all user-facing content (maintain brand consistency)
+- Track progress in `docs/planning/MEVrebels-execution-plan.md` daily
+- Refer to `docs/planning/MEVrebels-PRD.md` for Epic/Story/Task structure
 
 **Decision Framework:**
-- If uncertain about feature priority: Check docs/MEVrebels-PRD.md Epic priority
-- If uncertain about branding: Read docs/BRAND.md
-- If uncertain about technical approach: Read docs/MEVrebels-strategy.md
-- If uncertain about progress: Update docs/MEVrebels-execution-plan.md
+- If uncertain about feature priority: Check docs/planning/MEVrebels-PRD.md Epic priority
+- If uncertain about branding: Read docs/brand/BRAND.md
+- If uncertain about technical approach: Read docs/planning/MEVrebels-strategy.md
+- If uncertain about progress: Update docs/planning/MEVrebels-execution-plan.md
 
 **Success Criteria:**
 1. **Hackathon**: Top 3 placement ($1,000 - $2,500)

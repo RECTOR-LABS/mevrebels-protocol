@@ -9,7 +9,7 @@ pub use constants::*;
 pub use instructions::*;
 pub use state::*;
 
-declare_id!("6JSrB5FXwC9WxPsY1s7w1wnK51TzjX4mwQ9PEiTUzxC1");
+declare_id!("RECjnbr96LG2mDTXzhB5ZVY4JRfnSKmtx1pCgrGbMws");
 
 #[program]
 pub mod strategy_registry {

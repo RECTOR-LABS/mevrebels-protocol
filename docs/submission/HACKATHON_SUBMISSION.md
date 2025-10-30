@@ -207,9 +207,9 @@ All working and tested! ✅
 - ✅ **README.md** - Comprehensive project overview
 - ✅ **DEMO.md** - Detailed demo guide for judges
 - ✅ **CLAUDE.md** - Project instructions and context
-- ✅ **docs/BRAND.md** - Complete brand guidelines
-- ✅ **docs/MEVrebels-PRD.md** - Product requirements
-- ✅ **docs/MEVrebels-strategy.md** - Strategic blueprint
+- ✅ **docs/brand/BRAND.md** - Complete brand guidelines
+- ✅ **docs/planning/MEVrebels-PRD.md** - Product requirements
+- ✅ **docs/planning/MEVrebels-strategy.md** - Strategic blueprint
 
 ### Test Results
 - ✅ **41/50 tests passing** (82% coverage)

@@ -148,14 +148,14 @@ anchor test
 ## 📚 Documentation
 
 ### Core Documents
-- **[BRAND.md](./docs/BRAND.md)** - Comprehensive brand guidelines (investor-ready)
-- **[MEVrebels-strategy.md](./docs/MEVrebels-strategy.md)** - Strategic blueprint and technical approach
-- **[MEVrebels-PRD.md](./docs/MEVrebels-PRD.md)** - Product Requirements (Epic/Story/Task structure)
-- **[MEVrebels-execution-plan.md](./docs/MEVrebels-execution-plan.md)** - Daily progress tracking
+- **[BRAND.md](./docs/brand/BRAND.md)** - Comprehensive brand guidelines (investor-ready)
+- **[MEVrebels-strategy.md](./docs/planning/MEVrebels-strategy.md)** - Strategic blueprint and technical approach
+- **[MEVrebels-PRD.md](./docs/planning/MEVrebels-PRD.md)** - Product Requirements (Epic/Story/Task structure)
+- **[MEVrebels-execution-plan.md](./docs/planning/MEVrebels-execution-plan.md)** - Daily progress tracking
 - **[CLAUDE.md](./CLAUDE.md)** - Project instructions for AI agents
 
 ### Reference
-- **[bounty-original.md](./docs/bounty-original.md)** - Original bounty requirements
+- **[bounty-original.md](./docs/planning/bounty-original.md)** - Original bounty requirements
 - **[RESOURCES.md](./docs/RESOURCES.md)** - Curated links and references
 
 ---
@@ -551,7 +551,7 @@ mevrebels-protocol/
 - **Colors**: Rebellious Red (#E63946), Midnight Black (#1D1D1D), Trust Blue (#457B9D)
 - **Personality**: Punky, rebellious, community-first, technically excellent
 
-See [BRAND.md](./docs/BRAND.md) for comprehensive brand guidelines.
+See [BRAND.md](./docs/brand/BRAND.md) for comprehensive brand guidelines.
 
 ---
 

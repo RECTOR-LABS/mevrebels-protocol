@@ -6,17 +6,26 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-strategy_registry = "6JSrB5FXwC9WxPsY1s7w1wnK51TzjX4mwQ9PEiTUzxC1"
-execution_engine = "ExecRebe1sEngineMocKF1ash1oanArbitrageV1111"
-dao_governance = "CXkpLkkHiCTJ9ZcxRbc23cR7kQpKGeYxDy2z7xqWd1r8"
-flash_loan = "F1agXX4p3jFV6ASqqv4ZfTNvW94WtJiinvhKH8NZ77VG"
+strategy_registry = "RECjnbr96LG2mDTXzhB5ZVY4JRfnSKmtx1pCgrGbMws"
+execution_engine = "REC2Aq9iAu4hu7efgJhtyFyWS1bSBDYgeoVXXQFtfpk"
+dao_governance = "RECwcpcHwBeDAV7tBvUuhJzsih16BaveZRC74kbBkSS"
+flash_loan = "REChcXRRzBxhLvjs4v1HZ1Zx3R6hUnTEVjdKDwwbT9w"
+
+[programs.devnet]
+strategy_registry = "RECjnbr96LG2mDTXzhB5ZVY4JRfnSKmtx1pCgrGbMws"
+execution_engine = "REC2Aq9iAu4hu7efgJhtyFyWS1bSBDYgeoVXXQFtfpk"
+dao_governance = "RECwcpcHwBeDAV7tBvUuhJzsih16BaveZRC74kbBkSS"
+flash_loan = "REChcXRRzBxhLvjs4v1HZ1Zx3R6hUnTEVjdKDwwbT9w"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "localnet"
-wallet = "~/.config/solana/id.json"
+cluster = "devnet"
+wallet = "~/.config/solana/REC-devnet.json"
+
+[provider.devnet]
+url = "https://devnet.helius-rpc.com/?api-key=***REMOVED***"
 
 [scripts]
 test = "npm run ts-mocha -- -p ./tsconfig.json -t 1000000 \"tests/**/*.ts\""
