@@ -22,8 +22,10 @@ def verify_webhook_signature(payload: bytes, signature: str, secret: str) -> boo
     Helius signs webhooks with HMAC-SHA256
     """
     if not secret:
-        logger.warning("Webhook secret not configured, skipping signature verification")
-        return True
+        # In production, webhook secret MUST be configured
+        # This prevents unauthorized webhook calls that could inject false data
+        logger.error("Webhook secret not configured - signature verification failed")
+        return False
 
     expected_signature = hmac.new(
         secret.encode(), payload, hashlib.sha256

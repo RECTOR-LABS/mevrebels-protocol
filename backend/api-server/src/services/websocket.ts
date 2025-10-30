@@ -2,6 +2,18 @@
  * WebSocket Server
  *
  * Real-time updates for opportunities and executions
+ *
+ * SECURITY MODEL:
+ * - Currently NO authentication required (public data only)
+ * - All broadcasted data is publicly available (opportunities, executions, proposals)
+ * - For production: Consider adding authentication to prevent abuse
+ * - Rate limiting handled at Nginx layer (100 req/s per IP)
+ *
+ * FUTURE IMPROVEMENTS:
+ * - Token-based authentication via query parameter (?token=...)
+ * - Origin validation to prevent unauthorized domains
+ * - Connection rate limiting (max connections per IP)
+ * - Message rate limiting (max messages per connection)
  */
 
 import { WebSocketServer, WebSocket } from 'ws';

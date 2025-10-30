@@ -1,3 +1,22 @@
+/**
+ * Rate Limiter Middleware
+ *
+ * Limits requests per IP using Redis for distributed rate limiting
+ *
+ * CONFIGURATION:
+ * - RATE_LIMIT_WINDOW_MS: Time window in milliseconds (default: 60000 = 1 minute)
+ * - RATE_LIMIT_MAX_REQUESTS: Max requests per window (default: 100)
+ *
+ * FAILURE BEHAVIOR:
+ * - FAILS OPEN: If Redis is unavailable, requests are allowed through
+ * - This prioritizes availability over strict rate limiting
+ * - For production: Consider implementing in-memory fallback or fail closed
+ *
+ * TRADE-OFFS:
+ * - Fail Open: Better UX, potential abuse during Redis outage
+ * - Fail Closed: Stricter security, but service unavailable if Redis down
+ */
+
 import { Request, Response, NextFunction } from 'express';
 import { redis } from '../services/redis';
 
@@ -32,6 +51,9 @@ export async function rateLimiter(
     next();
   } catch (error) {
     console.error('Rate limiter error:', error);
-    next(); // Fail open
+    // FAIL OPEN: Allow request through if Redis is unavailable
+    // This prioritizes service availability over strict rate limiting
+    // For stricter security, consider: return res.status(503).json({ error: 'Service Unavailable' });
+    next();
   }
 }
