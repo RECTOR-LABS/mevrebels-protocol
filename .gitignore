@@ -5,3 +5,17 @@ target
 node_modules
 test-ledger
 .yarn
+
+# Environment variables (NEVER commit these!)
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+
+# Secrets and keys
+*.pem
+*.key
+*-key.json
+secrets/
+.secrets

@@ -8,7 +8,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ***REMOVED***
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: mevrebels
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
@@ -29,7 +29,7 @@ services:
     image: redis:7-alpine
     container_name: mevrebels-redis
     restart: unless-stopped
-    command: redis-server --appendonly yes --requirepass ***REMOVED***
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
     ports:
       - "6379:6379"
     volumes:
@@ -53,8 +53,8 @@ services:
       NODE_ENV: development
       PORT: 3001
       WS_PORT: 3002
-      DATABASE_URL: postgresql://postgres:***REMOVED***@postgres:5432/mevrebels
-      REDIS_URL: redis://:***REMOVED***@redis:6379
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/mevrebels
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
       HELIUS_RPC: ${HELIUS_DEVNET_RPC}
       STRATEGY_REGISTRY_PROGRAM_ID: RECjnbr96LG2mDTXzhB5ZVY4JRfnSKmtx1pCgrGbMws
       EXECUTION_ENGINE_PROGRAM_ID: REC2Aq9iAu4hu7efgJhtyFyWS1bSBDYgeoVXXQFtfpk
@@ -84,8 +84,8 @@ services:
     environment:
       PYTHONUNBUFFERED: 1
       PORT: 3004
-      DATABASE_URL: postgresql://postgres:***REMOVED***@postgres:5432/mevrebels
-      REDIS_URL: redis://:***REMOVED***@redis:6379
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/mevrebels
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
       HELIUS_DEVNET_RPC: ${HELIUS_DEVNET_RPC}
       HELIUS_WEBHOOK_SECRET: ${HELIUS_WEBHOOK_SECRET}
       STRATEGY_REGISTRY_PROGRAM_ID: RECjnbr96LG2mDTXzhB5ZVY4JRfnSKmtx1pCgrGbMws
@@ -116,7 +116,7 @@ services:
     environment:
       RUST_LOG: info
       HELIUS_RPC: ${HELIUS_DEVNET_RPC}
-      REDIS_URL: redis://:***REMOVED***@redis:6379
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
       MIN_PROFIT_BPS: 50
       OPPORTUNITY_TTL_SECONDS: 10
     depends_on:
@@ -136,7 +136,7 @@ services:
     restart: unless-stopped
     environment:
       RUST_LOG: info
-      DATABASE_URL: postgresql://postgres:***REMOVED***@postgres:5432/mevrebels
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/mevrebels
       HELIUS_RPC: ${HELIUS_DEVNET_RPC}
       HELIUS_WEBHOOK_SECRET: ${HELIUS_WEBHOOK_SECRET}
       STRATEGY_REGISTRY_PROGRAM_ID: RECjnbr96LG2mDTXzhB5ZVY4JRfnSKmtx1pCgrGbMws
