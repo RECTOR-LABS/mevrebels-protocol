@@ -1,4 +1,5 @@
 use anchor_lang::prelude::*;
+use anchor_spl::token::{Token, TokenAccount};
 use crate::state::*;
 use crate::constants::*;
 use crate::error::ExecutionError;
@@ -6,6 +7,7 @@ use dao_governance::{
     program::DaoGovernance,
     cpi::accounts::DepositTreasury as DaoDepositTreasury,
 };
+use flash_loan::program::FlashLoan;
 
 /// Execute arbitrage strategy with mock flashloan
 ///
@@ -56,6 +58,26 @@ pub struct ExecuteStrategy<'info> {
     /// Strategy registry program for CPI
     pub strategy_registry_program: Program<'info, strategy_registry::program::StrategyRegistry>,
 
+    /// Flash loan pool account
+    #[account(mut)]
+    pub flash_loan_pool: Account<'info, flash_loan::FlashLoanPool>,
+
+    /// Flash loan pool authority (PDA)
+    /// CHECK: PDA authority validated by flash_loan program
+    pub flash_loan_pool_authority: UncheckedAccount<'info>,
+
+    /// Flash loan pool's WSOL token account
+    #[account(mut)]
+    pub flash_loan_pool_token_account: Account<'info, TokenAccount>,
+
+    /// Vault's WSOL token account (for borrowing/repaying)
+    #[account(mut)]
+    pub vault_token_account: Account<'info, TokenAccount>,
+
+    /// Flash loan program for CPI
+    pub flash_loan_program: Program<'info, FlashLoan>,
+
+    pub token_program: Program<'info, Token>,
     pub system_program: Program<'info, System>,
 }
 
@@ -89,27 +111,54 @@ pub fn handler(
         ExecutionError::StrategyNotApproved
     );
 
-    // Step 1: Borrow flashloan (mock)
-    let flashloan = borrow_flashloan(vault, borrow_amount)?;
-    msg!("Borrowed {} lamports from vault", flashloan.amount);
-    msg!("Flashloan fee: {} lamports", flashloan.fee);
+    // Step 1: Borrow from flash loan pool via CPI
+    borrow_from_flash_loan_pool(
+        &ctx.accounts.flash_loan_program.to_account_info(),
+        &ctx.accounts.flash_loan_pool.to_account_info(),
+        &ctx.accounts.flash_loan_pool_authority.to_account_info(),
+        &ctx.accounts.flash_loan_pool_token_account.to_account_info(),
+        &ctx.accounts.vault_token_account.to_account_info(),
+        &ctx.accounts.token_program.to_account_info(),
+        borrow_amount,
+    )?;
+
+    // Calculate flashloan fee (0.09%)
+    let flashloan_fee = ctx.accounts.flash_loan_pool.calculate_fee(borrow_amount)?;
+    msg!("Borrowed {} lamports from flash loan pool", borrow_amount);
+    msg!("Flashloan fee: {} lamports", flashloan_fee);
 
     // Step 2: Execute mock arbitrage (SOL → USDC → SOL)
-    let final_amount = execute_mock_arbitrage(flashloan.amount)?;
+    let final_amount = execute_mock_arbitrage(borrow_amount)?;
     msg!("Arbitrage result: {} lamports", final_amount);
 
-    // Step 3: Repay flashloan
-    let repayment_amount = flashloan.total_repayment()?;
-    repay_flashloan(vault, repayment_amount)?;
-    msg!("Repaid {} lamports to vault", repayment_amount);
+    // Step 3: Repay flash loan via CPI
+    let repayment_amount = borrow_amount
+        .checked_add(flashloan_fee)
+        .ok_or(ExecutionError::ArithmeticOverflow)?;
+
+    // Get vault bump for signing
+    let vault_bump = vault.bump;
+
+    repay_to_flash_loan_pool(
+        &ctx.accounts.flash_loan_program.to_account_info(),
+        &ctx.accounts.flash_loan_pool.to_account_info(),
+        &ctx.accounts.flash_loan_pool_authority.to_account_info(),
+        &ctx.accounts.flash_loan_pool_token_account.to_account_info(),
+        &ctx.accounts.vault_token_account.to_account_info(),
+        &vault.to_account_info(),
+        &ctx.accounts.token_program.to_account_info(),
+        borrow_amount,
+        vault_bump,
+    )?;
+    msg!("Repaid {} WSOL tokens to flash loan pool", repayment_amount);
 
     // Step 4: Calculate profit
     let gross_profit = final_amount
-        .checked_sub(flashloan.amount)
+        .checked_sub(borrow_amount)
         .ok_or(ExecutionError::ArithmeticUnderflow)?;
 
     let net_profit = gross_profit
-        .checked_sub(flashloan.fee)
+        .checked_sub(flashloan_fee)
         .ok_or(ExecutionError::NegativeProfit)?;
 
     // Validate minimum profit (slippage protection)
@@ -186,7 +235,7 @@ pub fn handler(
 
     vault.total_fees_collected = vault
         .total_fees_collected
-        .checked_add(flashloan.fee)
+        .checked_add(flashloan_fee)
         .ok_or(ExecutionError::ArithmeticOverflow)?;
 
     // Step 7: Update strategy metrics via CPI
@@ -201,8 +250,8 @@ pub fn handler(
     emit!(StrategyExecuted {
         strategy: strategy.key(),
         executor: ctx.accounts.executor.key(),
-        borrowed_amount: flashloan.amount,
-        flashloan_fee: flashloan.fee,
+        borrowed_amount: borrow_amount,
+        flashloan_fee,
         gross_profit,
         net_profit,
         creator_share,
@@ -218,50 +267,74 @@ pub fn handler(
 
 // ========== Internal Helper Functions ==========
 
-/// Mock flashloan borrow (transfers from vault to program)
-fn borrow_flashloan(vault: &mut ExecutionVault, amount: u64) -> Result<FlashloanBorrow> {
-    // Check vault has sufficient liquidity
-    require!(
-        vault.available_liquidity >= amount,
-        ExecutionError::InsufficientVaultLiquidity
-    );
+/// Borrow from flash loan pool via CPI
+fn borrow_from_flash_loan_pool<'info>(
+    flash_loan_program: &AccountInfo<'info>,
+    flash_loan_pool: &AccountInfo<'info>,
+    pool_authority: &AccountInfo<'info>,
+    pool_token_account: &AccountInfo<'info>,
+    borrower_token_account: &AccountInfo<'info>,
+    token_program: &AccountInfo<'info>,
+    amount: u64,
+) -> Result<()> {
+    // Build CPI accounts for WSOL token-based flash loan
+    let cpi_accounts = flash_loan::cpi::accounts::FlashBorrow {
+        pool: flash_loan_pool.clone(),
+        pool_authority: pool_authority.clone(),
+        pool_token_account: pool_token_account.clone(),
+        borrower_program: flash_loan_program.clone(),
+        borrower_token_account: borrower_token_account.clone(),
+        token_program: token_program.clone(),
+    };
 
-    // Calculate fee (0.09%)
-    let fee = amount
-        .checked_mul(FLASHLOAN_FEE_BPS)
-        .ok_or(ExecutionError::ArithmeticOverflow)?
-        .checked_div(BPS_DENOMINATOR)
-        .ok_or(ExecutionError::ArithmeticOverflow)?;
+    let cpi_ctx = CpiContext::new(flash_loan_program.clone(), cpi_accounts);
 
-    // Update vault state
-    vault.available_liquidity = vault
-        .available_liquidity
-        .checked_sub(amount)
-        .ok_or(ExecutionError::ArithmeticUnderflow)?;
+    // Call flash_borrow instruction
+    flash_loan::cpi::flash_borrow(cpi_ctx, amount)?;
 
-    vault.borrowed_amount = vault
-        .borrowed_amount
-        .checked_add(amount)
-        .ok_or(ExecutionError::ArithmeticOverflow)?;
+    msg!("Flash loan borrowed via CPI: {} WSOL tokens", amount);
 
-    Ok(FlashloanBorrow { amount, fee })
+    Ok(())
 }
 
-/// Mock flashloan repayment (transfers back to vault)
-fn repay_flashloan(vault: &mut ExecutionVault, repayment: u64) -> Result<()> {
-    // Validate repayment is sufficient
-    let borrowed = vault.borrowed_amount;
-    require!(
-        repayment >= borrowed,
-        ExecutionError::InsufficientRepayment
+/// Repay to flash loan pool via CPI
+fn repay_to_flash_loan_pool<'info>(
+    flash_loan_program: &AccountInfo<'info>,
+    flash_loan_pool: &AccountInfo<'info>,
+    pool_authority: &AccountInfo<'info>,
+    pool_token_account: &AccountInfo<'info>,
+    borrower_token_account: &AccountInfo<'info>,
+    borrower: &AccountInfo<'info>,
+    token_program: &AccountInfo<'info>,
+    amount_borrowed: u64,
+    vault_bump: u8,
+) -> Result<()> {
+    // Build CPI accounts for WSOL token-based repayment
+    let cpi_accounts = flash_loan::cpi::accounts::FlashRepay {
+        pool: flash_loan_pool.clone(),
+        pool_authority: pool_authority.clone(),
+        pool_token_account: pool_token_account.clone(),
+        borrower_token_account: borrower_token_account.clone(),
+        borrower: borrower.clone(),
+        token_program: token_program.clone(),
+    };
+
+    // Sign with vault PDA
+    let signer_seeds: &[&[&[u8]]] = &[&[
+        ExecutionVault::SEEDS_PREFIX,
+        &[vault_bump],
+    ]];
+
+    let cpi_ctx = CpiContext::new_with_signer(
+        flash_loan_program.clone(),
+        cpi_accounts,
+        signer_seeds,
     );
 
-    // Update vault state
-    vault.borrowed_amount = 0;
-    vault.available_liquidity = vault
-        .available_liquidity
-        .checked_add(repayment)
-        .ok_or(ExecutionError::ArithmeticOverflow)?;
+    // Call flash_repay instruction
+    flash_loan::cpi::flash_repay(cpi_ctx, amount_borrowed)?;
+
+    msg!("Flash loan repaid via CPI");
 
     Ok(())
 }
