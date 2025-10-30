@@ -1,0 +1,31 @@
+[toolchain]
+package_manager = "npm"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.localnet]
+strategy_registry = "RECjnbr96LG2mDTXzhB5ZVY4JRfnSKmtx1pCgrGbMws"
+execution_engine = "REC2Aq9iAu4hu7efgJhtyFyWS1bSBDYgeoVXXQFtfpk"
+dao_governance = "RECwcpcHwBeDAV7tBvUuhJzsih16BaveZRC74kbBkSS"
+flash_loan = "REChcXRRzBxhLvjs4v1HZ1Zx3R6hUnTEVjdKDwwbT9w"
+
+[programs.devnet]
+strategy_registry = "RECjnbr96LG2mDTXzhB5ZVY4JRfnSKmtx1pCgrGbMws"
+execution_engine = "REC2Aq9iAu4hu7efgJhtyFyWS1bSBDYgeoVXXQFtfpk"
+dao_governance = "RECwcpcHwBeDAV7tBvUuhJzsih16BaveZRC74kbBkSS"
+flash_loan = "REChcXRRzBxhLvjs4v1HZ1Zx3R6hUnTEVjdKDwwbT9w"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "devnet"
+wallet = "~/.config/solana/REC-devnet.json"
+
+[provider.devnet]
+url = "https://devnet.helius-rpc.com/?api-key=***REMOVED***"
+
+[scripts]
+test = "npm run ts-mocha -- -p ./tsconfig.json -t 1000000 \"tests/**/*.ts\""

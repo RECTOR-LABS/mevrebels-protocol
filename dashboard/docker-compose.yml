@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Blue deployment (active)
+  mevrebels-blue:
+    image: ghcr.io/rector-labs/mevrebels-dashboard:latest
+    container_name: mevrebels-blue
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_CLUSTER=mainnet-beta
+      - NEXT_PUBLIC_RPC_ENDPOINT=${RPC_ENDPOINT:-https://api.mainnet-beta.solana.com}
+    networks:
+      - mevrebels-network
+    labels:
+      - "com.mevrebels.deployment=blue"
+      - "traefik.enable=true"
+      - "traefik.http.routers.mevrebels.rule=Host(`mevrebels.rectorspace.com`)"
+      - "traefik.http.routers.mevrebels.entrypoints=websecure"
+      - "traefik.http.routers.mevrebels.tls.certresolver=letsencrypt"
+
+  # Green deployment (standby for blue-green)
+  mevrebels-green:
+    image: ghcr.io/rector-labs/mevrebels-dashboard:latest
+    container_name: mevrebels-green
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_CLUSTER=mainnet-beta
+      - NEXT_PUBLIC_RPC_ENDPOINT=${RPC_ENDPOINT:-https://api.mainnet-beta.solana.com}
+    networks:
+      - mevrebels-network
+    labels:
+      - "com.mevrebels.deployment=green"
+    profiles:
+      - green  # Only starts when explicitly specified
+
+networks:
+  mevrebels-network:
+    driver: bridge
