@@ -1,5 +1,4 @@
 use anchor_lang::prelude::*;
-use anchor_lang::system_program;
 use crate::state::*;
 use crate::constants::*;
 use crate::error::ExecutionError;
@@ -277,24 +276,32 @@ fn execute_mock_arbitrage(input_sol: u64) -> Result<u64> {
 
 /// Transfer lamports from vault PDA to recipient
 ///
-/// Since vault is a PDA with data, we can't use system_program::transfer directly.
-/// Instead, we manually adjust lamports using account data.
+/// Manual lamport transfer is required because vault is a PDA with data,
+/// and system_program::transfer doesn't support transferring from accounts with data.
+/// This approach maintains Solana's account balance invariant by ensuring the
+/// sum of lamports before and after the instruction remains constant.
 fn transfer_lamports<'info>(
     from: &AccountInfo<'info>,
     to: &AccountInfo<'info>,
     amount: u64,
     _signer_seeds: &[&[&[u8]]],
 ) -> Result<()> {
-    // Manually transfer lamports by adjusting account balances
-    **from.try_borrow_mut_lamports()? = from
-        .lamports()
+    // Get current balances
+    let from_lamports = from.lamports();
+    let to_lamports = to.lamports();
+
+    // Calculate new balances
+    let new_from_lamports = from_lamports
         .checked_sub(amount)
         .ok_or(ExecutionError::ArithmeticUnderflow)?;
 
-    **to.try_borrow_mut_lamports()? = to
-        .lamports()
+    let new_to_lamports = to_lamports
         .checked_add(amount)
         .ok_or(ExecutionError::ArithmeticOverflow)?;
+
+    // Update balances atomically
+    **from.lamports.borrow_mut() = new_from_lamports;
+    **to.lamports.borrow_mut() = new_to_lamports;
 
     Ok(())
 }
