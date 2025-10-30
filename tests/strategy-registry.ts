@@ -42,14 +42,21 @@ describe("Strategy Registry", () => {
 
   describe("Admin Initialization", () => {
     it("Initializes admin config", async () => {
-      await program.methods
-        .initializeAdmin()
-        .accounts({
-          adminConfig,
-          admin: admin.publicKey,
-          systemProgram: SystemProgram.programId,
-        })
-        .rpc();
+      try {
+        await program.methods
+          .initializeAdmin()
+          .accounts({
+            adminConfig,
+            admin: admin.publicKey,
+            systemProgram: SystemProgram.programId,
+          })
+          .rpc();
+      } catch (err) {
+        // Skip if already initialized by another test suite
+        if (!err.toString().includes("already in use")) {
+          throw err;
+        }
+      }
 
       const config = await program.account.adminConfig.fetch(adminConfig);
       assert.equal(config.admin.toString(), admin.publicKey.toString());

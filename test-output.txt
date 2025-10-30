@@ -1,0 +1,296 @@
+warning: ambiguous glob re-exports
+ --> programs/strategy-registry/src/instructions/mod.rs:5:9
+  |
+5 | pub use create_strategy::*;
+  |         ^^^^^^^^^^^^^^^^^^ the name `handler` in the value namespace is first re-exported here
+6 | pub use approve_strategy::*;
+7 | pub use update_metrics::*;
+  |         ----------------- but the name `handler` in the value namespace is also re-exported here
+  |
+  = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `initialize_admin` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `initialize_admin` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `approve_strategy` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `approve_strategy` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `reject_strategy` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `reject_strategy` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `get_strategy_stats` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `get_strategy_stats` in the value namespace is also re-exported here
+
+warning: `strategy-registry` (lib) generated 5 warnings
+   Compiling dao-governance v0.1.0 (/Users/rz/local-dev/mevrebels-protocol/programs/dao-governance)
+warning: unused import: `anchor_lang::prelude::*`
+ --> programs/dao-governance/src/constants.rs:1:5
+  |
+1 | use anchor_lang::prelude::*;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `StrategyAccount`
+ --> programs/dao-governance/src/instructions/execute_proposal.rs:5:5
+  |
+5 |     StrategyAccount,
+  |     ^^^^^^^^^^^^^^^
+
+warning: ambiguous glob re-exports
+  --> programs/dao-governance/src/instructions/mod.rs:7:9
+   |
+7  | pub use initialize::*;
+   |         ^^^^^^^^^^^^^ the name `handler` in the value namespace is first re-exported here
+...
+11 | pub use deposit_treasury::*;
+   |         ------------------- but the name `handler` in the value namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: ambiguous glob re-exports
+  --> programs/dao-governance/src/lib.rs:10:9
+   |
+10 | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `distribute_tokens` in the value namespace is first re-exported here
+...
+15 | #[program]
+   | ---------- but the name `distribute_tokens` in the value namespace is also re-exported here
+
+warning: `dao-governance` (lib) generated 4 warnings (run `cargo fix --lib -p dao-governance` to apply 2 suggestions)
+   Compiling execution-engine v0.1.0 (/Users/rz/local-dev/mevrebels-protocol/programs/execution-engine)
+warning: ambiguous glob re-exports
+ --> programs/execution-engine/src/instructions/mod.rs:4:9
+  |
+4 | pub use initialize_vault::*;
+  |         ^^^^^^^^^^^^^^^^^^^ the name `handler` in the value namespace is first re-exported here
+5 | pub use execute_strategy::*;
+  |         ------------------- but the name `handler` in the value namespace is also re-exported here
+  |
+  = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: calls to `std::mem::drop` with a reference instead of an owned value does nothing
+   --> programs/execution-engine/src/instructions/execute_strategy.rs:161:5
+    |
+161 |     drop(vault);
+    |     ^^^^^-----^
+    |          |
+    |          argument has type `&mut anchor_lang::prelude::Account<'_, execution_vault::ExecutionVault>`
+    |
+    = note: `#[warn(dropping_references)]` on by default
+help: use `let _ = ...` to ignore the expression or result
+    |
+161 -     drop(vault);
+161 +     let _ = vault;
+    |
+
+warning: `execution-engine` (lib) generated 2 warnings
+    Finished `release` profile [optimized] target(s) in 3.07s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.11s
+     Running unittests src/lib.rs (/Users/rz/local-dev/mevrebels-protocol/target/debug/deps/execution_engine-d1057ec25fbe6a65)
+   Compiling strategy-registry v0.1.0 (/Users/rz/local-dev/mevrebels-protocol/programs/strategy-registry)
+warning: ambiguous glob re-exports
+ --> programs/strategy-registry/src/instructions/mod.rs:5:9
+  |
+5 | pub use create_strategy::*;
+  |         ^^^^^^^^^^^^^^^^^^ the name `handler` in the value namespace is first re-exported here
+6 | pub use approve_strategy::*;
+7 | pub use update_metrics::*;
+  |         ----------------- but the name `handler` in the value namespace is also re-exported here
+  |
+  = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `initialize_admin` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `initialize_admin` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `approve_strategy` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `approve_strategy` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `reject_strategy` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `reject_strategy` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `get_strategy_stats` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `get_strategy_stats` in the value namespace is also re-exported here
+
+warning: `strategy-registry` (lib) generated 5 warnings
+    Finished `release` profile [optimized] target(s) in 1.21s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.09s
+     Running unittests src/lib.rs (/Users/rz/local-dev/mevrebels-protocol/target/debug/deps/strategy_registry-2dea680d3829410d)
+   Compiling strategy-registry v0.1.0 (/Users/rz/local-dev/mevrebels-protocol/programs/strategy-registry)
+warning: ambiguous glob re-exports
+ --> programs/strategy-registry/src/instructions/mod.rs:5:9
+  |
+5 | pub use create_strategy::*;
+  |         ^^^^^^^^^^^^^^^^^^ the name `handler` in the value namespace is first re-exported here
+6 | pub use approve_strategy::*;
+7 | pub use update_metrics::*;
+  |         ----------------- but the name `handler` in the value namespace is also re-exported here
+  |
+  = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `initialize_admin` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `initialize_admin` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `approve_strategy` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `approve_strategy` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `reject_strategy` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `reject_strategy` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `get_strategy_stats` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `get_strategy_stats` in the value namespace is also re-exported here
+
+warning: `strategy-registry` (lib) generated 5 warnings
+   Compiling dao-governance v0.1.0 (/Users/rz/local-dev/mevrebels-protocol/programs/dao-governance)
+warning: unused import: `anchor_lang::prelude::*`
+ --> programs/dao-governance/src/constants.rs:1:5
+  |
+1 | use anchor_lang::prelude::*;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `StrategyAccount`
+ --> programs/dao-governance/src/instructions/execute_proposal.rs:5:5
+  |
+5 |     StrategyAccount,
+  |     ^^^^^^^^^^^^^^^
+
+warning: ambiguous glob re-exports
+  --> programs/dao-governance/src/instructions/mod.rs:7:9
+   |
+7  | pub use initialize::*;
+   |         ^^^^^^^^^^^^^ the name `handler` in the value namespace is first re-exported here
+...
+11 | pub use deposit_treasury::*;
+   |         ------------------- but the name `handler` in the value namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: ambiguous glob re-exports
+  --> programs/dao-governance/src/lib.rs:10:9
+   |
+10 | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `distribute_tokens` in the value namespace is first re-exported here
+...
+15 | #[program]
+   | ---------- but the name `distribute_tokens` in the value namespace is also re-exported here
+
+warning: `dao-governance` (lib) generated 4 warnings (run `cargo fix --lib -p dao-governance` to apply 2 suggestions)
+    Finished `release` profile [optimized] target(s) in 3.16s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.11s
+     Running unittests src/lib.rs (/Users/rz/local-dev/mevrebels-protocol/target/debug/deps/dao_governance-c973313f6eee9626)
+
+Found a 'test' script in the Anchor.toml. Running it as a test suite!
+
+Running test suite: "/Users/rz/local-dev/mevrebels-protocol/Anchor.toml"
+
+Error: websocket error
+Error: websocket error
+Error: websocket error
+
+> ts-mocha
+> ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts
+
+
+Error: Cannot find module '@solana/spl-token'
+Require stack:
+- /Users/rz/local-dev/mevrebels-protocol/tests/dao-governance.ts
+- /Users/rz/local-dev/mevrebels-protocol/node_modules/mocha/lib/nodejs/esm-utils.js
+- /Users/rz/local-dev/mevrebels-protocol/node_modules/mocha/lib/mocha.js
+- /Users/rz/local-dev/mevrebels-protocol/node_modules/mocha/lib/cli/one-and-dones.js
+- /Users/rz/local-dev/mevrebels-protocol/node_modules/mocha/lib/cli/options.js
+- /Users/rz/local-dev/mevrebels-protocol/node_modules/mocha/bin/mocha
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1225:15)
+    at Function._load (node:internal/modules/cjs/loader:1055:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at Module.require (node:internal/modules/cjs/loader:1311:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.<anonymous> (/Users/rz/local-dev/mevrebels-protocol/tests/dao-governance.ts:6:1)
+    at Module._compile (node:internal/modules/cjs/loader:1554:14)
+    at Module.m._compile (/Users/rz/local-dev/mevrebels-protocol/node_modules/ts-node/src/index.ts:439:23)
+    at node:internal/modules/cjs/loader:1706:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/rz/local-dev/mevrebels-protocol/node_modules/ts-node/src/index.ts:442:12)
+    at Module.load (node:internal/modules/cjs/loader:1289:32)
+    at Function._load (node:internal/modules/cjs/loader:1108:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at Module.require (node:internal/modules/cjs/loader:1311:12)
+    at require (node:internal/modules/helpers:136:16)
+    at Object.exports.requireOrImport (/Users/rz/local-dev/mevrebels-protocol/node_modules/mocha/lib/nodejs/esm-utils.js:60:20)
+    at Object.exports.loadFilesAsync (/Users/rz/local-dev/mevrebels-protocol/node_modules/mocha/lib/nodejs/esm-utils.js:103:20)
+    at singleRun (/Users/rz/local-dev/mevrebels-protocol/node_modules/mocha/lib/cli/run-helpers.js:125:3)
+    at Object.exports.handler (/Users/rz/local-dev/mevrebels-protocol/node_modules/mocha/lib/cli/run.js:374:5)
