@@ -9,8 +9,8 @@ WORKDIR /app
 # Copy package files
 COPY package.json package-lock.json ./
 
-# Install dependencies
-RUN npm install --frozen-lockfile
+# Install dependencies (allow optional dependencies to fail - hardware wallets not needed for MVP)
+RUN npm install --frozen-lockfile --no-optional || npm install --frozen-lockfile --ignore-scripts
 
 # Build the application
 FROM base AS builder

@@ -10,10 +10,10 @@ services:
     container_name: mevrebels-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ***REMOVED***
-      POSTGRES_DB: mevrebels
-      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "***REMOVED***"
+      POSTGRES_DB: "mevrebels"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
     ports:
       - "5433:5432"
     volumes:
@@ -32,7 +32,7 @@ services:
     image: redis:7-alpine
     container_name: mevrebels-redis
     restart: unless-stopped
-    command: redis-server --appendonly yes --requirepass ***REMOVED***
+    command: redis-server --appendonly yes --requirepass "***REMOVED***"
     ports:
       - "6380:6379"
     volumes:
