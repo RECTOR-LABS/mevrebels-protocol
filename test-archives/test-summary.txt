@@ -1,0 +1,200 @@
+      14) Initializes admin config
+      ✔ Fails to initialize admin config twice
+    Strategy Creation
+      ✔ Creates a valid strategy (562ms)
+      ✔ Fails with profit threshold too low
+      ✔ Fails with slippage too high
+      ✔ Fails with no DEXs specified
+      ✔ Fails with no token pairs specified
+      ✔ Fails with identical tokens in pair
+    Strategy Approval
+      ✔ Admin approves a strategy (534ms)
+      ✔ Fails when non-admin tries to approve (524ms)
+      ✔ Admin rejects a strategy (1028ms)
+    Performance Tracking
+      ✔ Updates metrics after successful execution (508ms)
+      ✔ Updates metrics after failed execution (543ms)
+      ✔ Handles multiple successful executions (2561ms)
+      ✔ Calculates success rate correctly
+      ✔ Gets strategy stats
+      ✔ Fails to update metrics for unapproved strategy (521ms)
+
+
+  36 passing (24s)
+  14 failing
+
+  1) DAO Governance
+       Initialization
+         Initializes governance config and REBEL token mint:
+     TypeError: Cannot read properties of undefined (reading 'toString')
+      at /Users/rz/local-dev/mevrebels-protocol/tests/dao-governance.ts:152:37
+      at Generator.next (<anonymous>)
+      at fulfilled (tests/dao-governance.ts:38:58)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  2) DAO Governance
+       Proposal Creation
+         Creates strategy approval proposal with sufficient tokens:
+     Error: AnchorError caused by account: proposal. Error Code: ConstraintSeeds. Error Number: 2006. Error Message: A seeds constraint was violated.
+Program log: Left:
+Program log: 9FADV7nQbajUp1kfrmNdVeQQafv3bxKnYazX5jjX2qAe
+Program log: Right:
+Program log: EULX7owGq7QS2XMFMQvawFuVXPLJreMSMxgpfBKRJi6
+      at Function.parse (node_modules/@coral-xyz/anchor/src/error.ts:168:14)
+      at translateError (node_modules/@coral-xyz/anchor/src/error.ts:277:35)
+      at MethodsBuilder.rpc [as _rpcFn] (node_modules/@coral-xyz/anchor/src/program/namespace/rpc.ts:35:29)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  3) DAO Governance
+       Proposal Creation
+         Fails if proposer has insufficient tokens:
+     AssertionError: expected 'AnchorError caused by account: propos…' to include 'InsufficientTokens'
+      at /Users/rz/local-dev/mevrebels-protocol/tests/dao-governance.ts:424:35
+      at Generator.throw (<anonymous>)
+      at rejected (tests/dao-governance.ts:39:65)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  4) DAO Governance
+       Voting
+         Fails if user has no REBEL tokens:
+     AssertionError: expected 'AnchorError caused by account: propos…' to include 'NoVotingPower'
+      at /Users/rz/local-dev/mevrebels-protocol/tests/dao-governance.ts:526:35
+      at Generator.throw (<anonymous>)
+      at rejected (tests/dao-governance.ts:39:65)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  5) DAO Governance
+       Proposal Execution
+         Verifies proposal execution requirements:
+     Error: Account does not exist or has no data 9FADV7nQbajUp1kfrmNdVeQQafv3bxKnYazX5jjX2qAe
+      at AccountClient.fetch (node_modules/@coral-xyz/anchor/src/program/namespace/account.ts:168:13)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  6) DAO Governance
+       Error Handling
+         Validates governance configuration integrity:
+     TypeError: Cannot read properties of undefined (reading 'toNumber')
+      at /Users/rz/local-dev/mevrebels-protocol/tests/dao-governance.ts:630:34
+      at Generator.next (<anonymous>)
+      at fulfilled (tests/dao-governance.ts:38:58)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  7) DAO Governance
+       Error Handling
+         Ensures REBEL token mint authority is PDA:
+     TypeError: publicKey.toBase58 is not a function
+      at Connection.getAccountInfo (node_modules/@solana/web3.js/src/connection.ts:3623:57)
+
+  8) DAO Integration
+       Full Governance Flow
+         Complete flow: strategy → proposal → vote → approve:
+     TypeError: Cannot read properties of undefined (reading 'fetch')
+      at /Users/rz/local-dev/mevrebels-protocol/tests/dao-integration.ts:213:69
+      at Generator.next (<anonymous>)
+      at fulfilled (tests/dao-integration.ts:38:58)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  9) DAO Integration
+       Multi-Program Coordination
+         Verifies all three programs can interact:
+     TypeError: Cannot read properties of undefined (reading 'fetch')
+      at /Users/rz/local-dev/mevrebels-protocol/tests/dao-integration.ts:361:63
+      at Generator.next (<anonymous>)
+      at /Users/rz/local-dev/mevrebels-protocol/tests/dao-integration.ts:41:71
+      at new Promise (<anonymous>)
+      at __awaiter (tests/dao-integration.ts:37:12)
+      at Context.<anonymous> (tests/dao-integration.ts:357:63)
+      at processImmediate (node:internal/timers:491:21)
+
+  10) Execution Engine
+       Strategy Execution - Happy Path
+         Executes strategy with 10 SOL and distributes profit correctly:
+     Simulation failed. 
+Message: Transaction simulation failed: Error processing Instruction 0: sum of account balances before and after instruction do not match. 
+Logs: 
+[
+  "Program log: Borrowed 10000000000 lamports from vault",
+  "Program log: Flashloan fee: 9000000 lamports",
+  "Program log: Mock arbitrage: 10000000000 lamports → 10800000000 lamports (8% profit)",
+  "Program log: Arbitrage result: 10800000000 lamports",
+  "Program log: Repaid 10009000000 lamports to vault",
+  "Program log: Gross profit: 800000000 lamports",
+  "Program log: Net profit: 791000000 lamports",
+  "Program log: Distributing profits: creator=316400000, executor=316400000, treasury=158200000",
+  "Program ExecRebe1sEngineMocKF1ash1oanArbitrageV1111 consumed 16999 of 200000 compute units",
+  "Program ExecRebe1sEngineMocKF1ash1oanArbitrageV1111 failed: sum of account balances before and after instruction do not match"
+]. 
+Catch the `SendTransactionError` and call `getLogs()` on it for full details.
+  
+
+  11) Execution Engine
+       Strategy Execution - Happy Path
+         Updates strategy metrics via CPI:
+
+      AssertionError: expected +0 to equal 1
+      + expected - actual
+
+      -0
+      +1
+      
+      at /Users/rz/local-dev/mevrebels-protocol/tests/execution-engine.ts:280:14
+      at Generator.next (<anonymous>)
+      at fulfilled (tests/execution-engine.ts:38:58)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  12) Execution Engine
+       Multiple Executions
+         Handles multiple consecutive executions correctly:
+     Simulation failed. 
+Message: Transaction simulation failed: Error processing Instruction 0: sum of account balances before and after instruction do not match. 
+Logs: 
+[
+  "Program log: Borrowed 10000000000 lamports from vault",
+  "Program log: Flashloan fee: 9000000 lamports",
+  "Program log: Mock arbitrage: 10000000000 lamports → 10800000000 lamports (8% profit)",
+  "Program log: Arbitrage result: 10800000000 lamports",
+  "Program log: Repaid 10009000000 lamports to vault",
+  "Program log: Gross profit: 800000000 lamports",
+  "Program log: Net profit: 791000000 lamports",
+  "Program log: Distributing profits: creator=316400000, executor=316400000, treasury=158200000",
+  "Program ExecRebe1sEngineMocKF1ash1oanArbitrageV1111 consumed 16999 of 200000 compute units",
+  "Program ExecRebe1sEngineMocKF1ash1oanArbitrageV1111 failed: sum of account balances before and after instruction do not match"
+]. 
+Catch the `SendTransactionError` and call `getLogs()` on it for full details.
+  
+
+  13) Execution Engine
+       Multiple Executions
+         Strategy metrics accumulate correctly:
+
+      AssertionError: expected +0 to be at least 4
+      + expected - actual
+
+      -0
+      +4
+      
+      at /Users/rz/local-dev/mevrebels-protocol/tests/execution-engine.ts:362:14
+      at Generator.next (<anonymous>)
+      at fulfilled (tests/execution-engine.ts:38:58)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  14) Strategy Registry
+       Admin Initialization
+         Initializes admin config:
+     Simulation failed. 
+Message: Transaction simulation failed: Error processing Instruction 0: custom program error: 0x0. 
+Logs: 
+[
+  "Program 6JSrB5FXwC9WxPsY1s7w1wnK51TzjX4mwQ9PEiTUzxC1 invoke [1]",
+  "Program log: Instruction: InitializeAdmin",
+  "Program 11111111111111111111111111111111 invoke [2]",
+  "Allocate: account Address { address: FhUHNnLkn4GwJE4oFzgw9QXQQT5LaiVuYLjJY1S9DGkp, base: None } already in use",
+  "Program 11111111111111111111111111111111 failed: custom program error: 0x0",
+  "Program 6JSrB5FXwC9WxPsY1s7w1wnK51TzjX4mwQ9PEiTUzxC1 consumed 4800 of 200000 compute units",
+  "Program 6JSrB5FXwC9WxPsY1s7w1wnK51TzjX4mwQ9PEiTUzxC1 failed: custom program error: 0x0"
+]. 
+Catch the `SendTransactionError` and call `getLogs()` on it for full details.
+  
+
+
+

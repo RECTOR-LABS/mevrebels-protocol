@@ -1,0 +1,304 @@
+   Compiling strategy-registry v0.1.0 (/Users/rz/local-dev/mevrebels-protocol/programs/strategy-registry)
+warning: ambiguous glob re-exports
+ --> programs/strategy-registry/src/instructions/mod.rs:5:9
+  |
+5 | pub use create_strategy::*;
+  |         ^^^^^^^^^^^^^^^^^^ the name `handler` in the value namespace is first re-exported here
+6 | pub use approve_strategy::*;
+7 | pub use update_metrics::*;
+  |         ----------------- but the name `handler` in the value namespace is also re-exported here
+  |
+  = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `initialize_admin` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `initialize_admin` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `approve_strategy` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `approve_strategy` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `reject_strategy` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `reject_strategy` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `get_strategy_stats` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `get_strategy_stats` in the value namespace is also re-exported here
+
+warning: `strategy-registry` (lib) generated 5 warnings
+   Compiling execution-engine v0.1.0 (/Users/rz/local-dev/mevrebels-protocol/programs/execution-engine)
+warning: unused import: `anchor_lang::system_program`
+ --> programs/execution-engine/src/instructions/execute_strategy.rs:2:5
+  |
+2 | use anchor_lang::system_program;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: ambiguous glob re-exports
+ --> programs/execution-engine/src/instructions/mod.rs:4:9
+  |
+4 | pub use initialize_vault::*;
+  |         ^^^^^^^^^^^^^^^^^^^ the name `handler` in the value namespace is first re-exported here
+5 | pub use execute_strategy::*;
+  |         ------------------- but the name `handler` in the value namespace is also re-exported here
+  |
+  = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: `execution-engine` (lib) generated 2 warnings (run `cargo fix --lib -p execution-engine` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 3.32s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.19s
+     Running unittests src/lib.rs (/Users/rz/local-dev/mevrebels-protocol/target/debug/deps/execution_engine-931931feed7ae870)
+   Compiling strategy-registry v0.1.0 (/Users/rz/local-dev/mevrebels-protocol/programs/strategy-registry)
+warning: ambiguous glob re-exports
+ --> programs/strategy-registry/src/instructions/mod.rs:5:9
+  |
+5 | pub use create_strategy::*;
+  |         ^^^^^^^^^^^^^^^^^^ the name `handler` in the value namespace is first re-exported here
+6 | pub use approve_strategy::*;
+7 | pub use update_metrics::*;
+  |         ----------------- but the name `handler` in the value namespace is also re-exported here
+  |
+  = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `initialize_admin` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `initialize_admin` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `approve_strategy` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `approve_strategy` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `reject_strategy` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `reject_strategy` in the value namespace is also re-exported here
+
+warning: ambiguous glob re-exports
+  --> programs/strategy-registry/src/lib.rs:9:9
+   |
+9  | pub use instructions::*;
+   |         ^^^^^^^^^^^^^^^ the name `get_strategy_stats` in the value namespace is first re-exported here
+...
+14 | #[program]
+   | ---------- but the name `get_strategy_stats` in the value namespace is also re-exported here
+
+warning: `strategy-registry` (lib) generated 5 warnings
+    Finished `release` profile [optimized] target(s) in 1.52s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.14s
+     Running unittests src/lib.rs (/Users/rz/local-dev/mevrebels-protocol/target/debug/deps/strategy_registry-2dea680d3829410d)
+
+Found a 'test' script in the Anchor.toml. Running it as a test suite!
+
+Running test suite: "/Users/rz/local-dev/mevrebels-protocol/Anchor.toml"
+
+Error: websocket error
+Error: websocket error
+
+> ts-mocha
+> ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts
+
+
+
+  Execution Engine
+    Vault Initialization
+✓ Vault initialized with 40/40/20 profit split
+      ✔ Initializes vault and profit config with 40/40/20 split (473ms)
+✓ Vault funded with 100 SOL
+✓ Available liquidity: 98.00145464 SOL
+      ✔ Funds vault with 100 SOL for flashloans (942ms)
+    Strategy Setup (Pre-execution)
+✓ Admin config initialized
+      ✔ Initializes admin config in strategy registry (470ms)
+✓ Test strategy created and approved
+      ✔ Creates and approves a test strategy (932ms)
+    Strategy Execution - Happy Path
+      1) Executes strategy with 10 SOL and distributes profit correctly
+      2) Updates strategy metrics via CPI
+    Slippage Protection
+✓ Correctly reverted on slippage protection
+      ✔ Reverts execution when min_profit is too high
+    Negative Profit Handling
+✓ Negative profit protection verified in code (mock rates guarantee profit)
+      ✔ Would revert on negative profit (demonstrated by math)
+    Multiple Executions
+      3) Handles multiple consecutive executions correctly
+      4) Strategy metrics accumulate correctly
+    Insufficient Vault Liquidity
+✓ Would correctly revert on insufficient liquidity (tracked by available_liquidity field)
+      ✔ Fails when vault doesn't have enough liquidity
+    Strategy Not Approved
+✓ Correctly rejected unapproved strategy
+      ✔ Fails when trying to execute unapproved strategy (416ms)
+    Profit Distribution Math Verification
+✓ Profit split percentages sum to 100%
+      ✔ Verifies 40/40/20 split is mathematically correct
+  Profit 1 SOL:
+    Creator: 0.4 SOL (40%)
+    Executor: 0.4 SOL (40%)
+    Treasury: 0.2 SOL (20%)
+  Profit 10 SOL:
+    Creator: 4 SOL (40%)
+    Executor: 4 SOL (40%)
+    Treasury: 2 SOL (20%)
+  Profit 100 SOL:
+    Creator: 40 SOL (40%)
+    Executor: 40 SOL (40%)
+    Treasury: 20 SOL (20%)
+✓ Distribution math verified for multiple profit amounts
+      ✔ Calculates distribution correctly for various profit amounts
+
+  Strategy Registry
+    Admin Initialization
+      5) Initializes admin config
+      ✔ Fails to initialize admin config twice
+    Strategy Creation
+      ✔ Creates a valid strategy (497ms)
+      ✔ Fails with profit threshold too low
+      ✔ Fails with slippage too high
+      ✔ Fails with no DEXs specified
+      ✔ Fails with no token pairs specified
+      ✔ Fails with identical tokens in pair
+    Strategy Approval
+      ✔ Admin approves a strategy (472ms)
+      ✔ Fails when non-admin tries to approve (471ms)
+      ✔ Admin rejects a strategy (938ms)
+    Performance Tracking
+      ✔ Updates metrics after successful execution (486ms)
+      ✔ Updates metrics after failed execution (465ms)
+      ✔ Handles multiple successful executions (2334ms)
+      ✔ Calculates success rate correctly
+      ✔ Gets strategy stats
+      ✔ Fails to update metrics for unapproved strategy (474ms)
+
+
+  26 passing (12s)
+  5 failing
+
+  1) Execution Engine
+       Strategy Execution - Happy Path
+         Executes strategy with 10 SOL and distributes profit correctly:
+     Simulation failed. 
+Message: Transaction simulation failed: Error processing Instruction 0: sum of account balances before and after instruction do not match. 
+Logs: 
+[
+  "Program log: Borrowed 10000000000 lamports from vault",
+  "Program log: Flashloan fee: 9000000 lamports",
+  "Program log: Mock arbitrage: 10000000000 lamports → 10800000000 lamports (8% profit)",
+  "Program log: Arbitrage result: 10800000000 lamports",
+  "Program log: Repaid 10009000000 lamports to vault",
+  "Program log: Gross profit: 800000000 lamports",
+  "Program log: Net profit: 791000000 lamports",
+  "Program log: Distributing profits: creator=316400000, executor=316400000, treasury=158200000",
+  "Program ExecRebe1sEngineMocKF1ash1oanArbitrageV1111 consumed 16460 of 200000 compute units",
+  "Program ExecRebe1sEngineMocKF1ash1oanArbitrageV1111 failed: sum of account balances before and after instruction do not match"
+]. 
+Catch the `SendTransactionError` and call `getLogs()` on it for full details.
+  
+
+  2) Execution Engine
+       Strategy Execution - Happy Path
+         Updates strategy metrics via CPI:
+
+      AssertionError: expected +0 to equal 1
+      + expected - actual
+
+      -0
+      +1
+      
+      at /Users/rz/local-dev/mevrebels-protocol/tests/execution-engine.ts:280:14
+      at Generator.next (<anonymous>)
+      at fulfilled (tests/execution-engine.ts:38:58)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  3) Execution Engine
+       Multiple Executions
+         Handles multiple consecutive executions correctly:
+     Simulation failed. 
+Message: Transaction simulation failed: Error processing Instruction 0: sum of account balances before and after instruction do not match. 
+Logs: 
+[
+  "Program log: Borrowed 10000000000 lamports from vault",
+  "Program log: Flashloan fee: 9000000 lamports",
+  "Program log: Mock arbitrage: 10000000000 lamports → 10800000000 lamports (8% profit)",
+  "Program log: Arbitrage result: 10800000000 lamports",
+  "Program log: Repaid 10009000000 lamports to vault",
+  "Program log: Gross profit: 800000000 lamports",
+  "Program log: Net profit: 791000000 lamports",
+  "Program log: Distributing profits: creator=316400000, executor=316400000, treasury=158200000",
+  "Program ExecRebe1sEngineMocKF1ash1oanArbitrageV1111 consumed 16460 of 200000 compute units",
+  "Program ExecRebe1sEngineMocKF1ash1oanArbitrageV1111 failed: sum of account balances before and after instruction do not match"
+]. 
+Catch the `SendTransactionError` and call `getLogs()` on it for full details.
+  
+
+  4) Execution Engine
+       Multiple Executions
+         Strategy metrics accumulate correctly:
+
+      AssertionError: expected +0 to be at least 4
+      + expected - actual
+
+      -0
+      +4
+      
+      at /Users/rz/local-dev/mevrebels-protocol/tests/execution-engine.ts:362:14
+      at Generator.next (<anonymous>)
+      at fulfilled (tests/execution-engine.ts:38:58)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  5) Strategy Registry
+       Admin Initialization
+         Initializes admin config:
+     Simulation failed. 
+Message: Transaction simulation failed: Error processing Instruction 0: custom program error: 0x0. 
+Logs: 
+[
+  "Program 6JSrB5FXwC9WxPsY1s7w1wnK51TzjX4mwQ9PEiTUzxC1 invoke [1]",
+  "Program log: Instruction: InitializeAdmin",
+  "Program 11111111111111111111111111111111 invoke [2]",
+  "Allocate: account Address { address: FhUHNnLkn4GwJE4oFzgw9QXQQT5LaiVuYLjJY1S9DGkp, base: None } already in use",
+  "Program 11111111111111111111111111111111 failed: custom program error: 0x0",
+  "Program 6JSrB5FXwC9WxPsY1s7w1wnK51TzjX4mwQ9PEiTUzxC1 consumed 4800 of 200000 compute units",
+  "Program 6JSrB5FXwC9WxPsY1s7w1wnK51TzjX4mwQ9PEiTUzxC1 failed: custom program error: 0x0"
+]. 
+Catch the `SendTransactionError` and call `getLogs()` on it for full details.
+  
+
+
+
