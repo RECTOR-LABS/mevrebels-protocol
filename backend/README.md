@@ -471,6 +471,9 @@ cd analytics && pytest
 
 # TypeScript type checking
 cd api-server && npm run type-check
+
+# TypeScript strict type checking
+cd api-server && npm run typecheck:strict
 ```
 
 ## Deployment

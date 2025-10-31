@@ -31,7 +31,7 @@ const scaleIn = {
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.5, type: "spring", stiffness: 100 }
+    transition: { duration: 0.5, type: "spring" as const, stiffness: 100 }
   }
 };
 
@@ -371,7 +371,7 @@ export default function PitchDeckPage() {
                   'Treasury-funded development',
                 ]}
               />
-            </div>
+            </AnimatedGrid>
 
             {/* How It Works */}
             <div className="bg-gradient-to-br from-trust-blue/10 to-midnight-black border border-trust-blue rounded-lg p-8">
@@ -463,7 +463,7 @@ export default function PitchDeckPage() {
                 ]}
                 highlight="Developer-ready"
               />
-            </div>
+            </AnimatedGrid2Col>
 
             {/* Technical Highlights */}
             <div className="bg-midnight-black border border-border rounded-lg p-8">

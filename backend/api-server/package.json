@@ -9,7 +9,8 @@
     "start": "node dist/index.js",
     "test": "jest",
     "lint": "eslint src --ext .ts",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "typecheck:strict": "tsc --noEmit --strict"
   },
   "keywords": [
     "mevrebels",

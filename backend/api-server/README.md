@@ -85,6 +85,9 @@ npm test
 # Type check
 npm run type-check
 
+# Strict type check
+npm run typecheck:strict
+
 # Lint
 npm run lint
 ```

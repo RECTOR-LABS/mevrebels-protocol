@@ -210,8 +210,8 @@ npm run build        # Production build
 npm start            # Start production server
 
 # Code Quality
-npm run lint         # Run ESLint
-npm run type-check   # TypeScript type checking (future)
+npm run lint              # Run ESLint
+npm run typecheck:strict  # TypeScript strict type checking
 ```
 
 ### Connecting to Solana Programs
