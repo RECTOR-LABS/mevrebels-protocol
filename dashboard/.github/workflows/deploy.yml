@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - submission
     paths:
       - 'dashboard/**'
   workflow_dispatch:
