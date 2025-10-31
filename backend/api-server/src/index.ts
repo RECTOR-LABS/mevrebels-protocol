@@ -116,9 +116,21 @@ process.on('SIGINT', () => shutdown('SIGINT'));
 // Start server
 async function start() {
   try {
-    // Test database connection
-    await db.query('SELECT NOW()');
-    logger.info('✅ Database connected');
+    // Test database connection with retry
+    logger.info('🔄 Connecting to database...');
+    let retries = 5;
+    while (retries > 0) {
+      try {
+        await db.query('SELECT NOW()');
+        logger.info('✅ Database connected');
+        break;
+      } catch (error) {
+        retries--;
+        if (retries === 0) throw error;
+        logger.warn(`Database connection failed, retrying... (${retries} attempts left)`);
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
+    }
 
     // Test Redis connection
     await redis.ping();
