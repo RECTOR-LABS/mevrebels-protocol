@@ -61,26 +61,43 @@ export function StrategyCard({ strategy, onExecute }: StrategyCardProps) {
           {strategy.dexes.map((dex) => (
             <span
               key={dex}
-              className="px-2 py-1 text-xs font-mono bg-trust-blue/20 text-trust-blue border border-trust-blue/30 rounded"
+              className="px-2 py-1 text-xs font-mono bg-trust-blue/20 text-trust-blue border border-trust-blue/30 rounded uppercase"
             >
               {dex}
             </span>
           ))}
-          {strategy.tokenPairs.map((pair) => (
-            <span
-              key={pair}
-              className="px-2 py-1 text-xs font-mono bg-midnight-black/50 text-neutral-gray border border-border rounded"
-            >
-              {pair}
-            </span>
-          ))}
+          {strategy.tokenPairs.map((pair: any, idx: number) => {
+            // Handle both object format {tokenA, tokenB} and string format
+            if (typeof pair === 'object' && pair.tokenA && pair.tokenB) {
+              const tokenAShort = pair.tokenA.slice(0, 4) + '...' + pair.tokenA.slice(-4);
+              const tokenBShort = pair.tokenB.slice(0, 4) + '...' + pair.tokenB.slice(-4);
+              return (
+                <span
+                  key={`${pair.tokenA}-${pair.tokenB}-${idx}`}
+                  className="px-2 py-1 text-xs font-mono bg-midnight-black/50 text-neutral-gray border border-border rounded"
+                  title={`${pair.tokenA} / ${pair.tokenB}`}
+                >
+                  {tokenAShort} / {tokenBShort}
+                </span>
+              );
+            }
+            // Fallback for string format
+            return (
+              <span
+                key={`${pair}-${idx}`}
+                className="px-2 py-1 text-xs font-mono bg-midnight-black/50 text-neutral-gray border border-border rounded"
+              >
+                {pair}
+              </span>
+            );
+          })}
         </div>
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-3 gap-4 py-4 border-t border-b border-border">
           <div className="text-center">
             <div className="text-2xl font-black font-mono text-profit-green">
-              ${strategy.totalProfit.toLocaleString()}
+              {(strategy.totalProfit / 1_000_000_000).toFixed(2)} SOL
             </div>
             <div className="text-xs text-neutral-gray uppercase mt-1">
               Total Profit
@@ -96,7 +113,7 @@ export function StrategyCard({ strategy, onExecute }: StrategyCardProps) {
           </div>
           <div className="text-center">
             <div className="text-2xl font-black font-mono text-trust-blue">
-              {strategy.successRate}%
+              {strategy.successRate.toFixed(1)}%
             </div>
             <div className="text-xs text-neutral-gray uppercase mt-1">
               Success Rate
@@ -109,13 +126,13 @@ export function StrategyCard({ strategy, onExecute }: StrategyCardProps) {
           <div>
             <span className="text-neutral-gray">Min Profit:</span>{' '}
             <span className="font-mono text-white font-semibold">
-              {strategy.profitThreshold}%
+              {(strategy.profitThreshold / 100).toFixed(2)}%
             </span>
           </div>
           <div>
             <span className="text-neutral-gray">Max Slippage:</span>{' '}
             <span className="font-mono text-white font-semibold">
-              {strategy.maxSlippage}%
+              {(strategy.maxSlippage / 100).toFixed(2)}%
             </span>
           </div>
         </div>

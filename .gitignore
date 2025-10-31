@@ -19,3 +19,6 @@ test-ledger
 *-key.json
 secrets/
 .secrets
+
+# Playwright MCP testing artifacts
+.playwright-mcp/

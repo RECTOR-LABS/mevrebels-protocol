@@ -49,8 +49,25 @@ export const strategiesApi = {
    * Get all strategies
    */
   async getAll(): Promise<Strategy[]> {
-    const response = await apiRequest<{ strategies: Strategy[]; total: number; limit: number; offset: number }>('/api/strategies');
-    return response.strategies;
+    const response = await apiRequest<{ strategies: any[]; total: number; limit: number; offset: number }>('/api/strategies');
+    // Transform snake_case to camelCase
+    return response.strategies.map((s: any) => ({
+      id: s.id,
+      name: s.name,
+      creator: s.creator,
+      dexes: s.dexs || [],
+      tokenPairs: s.token_pairs || [],
+      profitThreshold: s.profit_threshold,
+      maxSlippage: s.max_slippage,
+      totalProfit: parseInt(s.total_profit, 10),
+      executionCount: s.execution_count,
+      successRate: s.execution_count > 0
+        ? (s.success_count / s.execution_count) * 100
+        : 0,
+      status: s.status,
+      createdAt: new Date(s.created_at),
+      lastExecuted: s.updated_at ? new Date(s.updated_at) : undefined,
+    }));
   },
 
   /**
@@ -117,7 +134,23 @@ export const proposalsApi = {
    * Get all proposals
    */
   async getAll(): Promise<Proposal[]> {
-    return apiRequest<Proposal[]>('/api/proposals');
+    const response = await apiRequest<{ proposals: any[]; total: number }>('/api/proposals');
+    // Transform snake_case to camelCase and parse dates
+    return response.proposals.map((p: any) => ({
+      id: p.id,
+      title: p.title,
+      description: p.description,
+      type: p.type,
+      proposer: p.proposer,
+      votesYes: parseInt(p.votes_yes, 10),
+      votesNo: parseInt(p.votes_no, 10),
+      votesAbstain: parseInt(p.votes_abstain, 10),
+      quorum: parseInt(p.quorum, 10),
+      status: p.status,
+      createdAt: new Date(p.created_at),
+      endsAt: new Date(p.ends_at),
+      strategyId: p.strategy_id,
+    }));
   },
 
   /**
@@ -151,7 +184,7 @@ export const analyticsApi = {
     totalProfit: number;
     totalExecutions: number;
   }> {
-    return apiRequest('/analytics/strategies/stats');
+    return apiRequest('/api/analytics/strategies/stats');
   },
 
   /**
@@ -164,7 +197,7 @@ export const analyticsApi = {
     avgProfitPerExecution: number;
     totalVolume: number;
   }> {
-    return apiRequest('/analytics/executions/stats');
+    return apiRequest('/api/analytics/executions/stats');
   },
 
   /**
@@ -186,7 +219,7 @@ export const analyticsApi = {
       totalEarnings: number;
     }>;
   }> {
-    return apiRequest('/analytics/leaderboard');
+    return apiRequest('/api/analytics/leaderboard');
   },
 };
 
