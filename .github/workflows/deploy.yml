@@ -87,10 +87,10 @@ jobs:
             # Determine standby deployment
             if [ "$ACTIVE" = "blue" ]; then
               STANDBY="green"
-              STANDBY_PORT=3001
+              STANDBY_PORT=3021
             else
               STANDBY="blue"
-              STANDBY_PORT=3000
+              STANDBY_PORT=3020
             fi
 
             echo "Active deployment: $ACTIVE"
