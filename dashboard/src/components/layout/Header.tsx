@@ -20,7 +20,7 @@ export function Header() {
         {/* Navigation */}
         <nav className="flex items-center space-x-6 text-sm font-medium flex-1">
           <Link
-            href="/"
+            href="/strategies"
             className="transition-colors hover:text-rebellious text-foreground/60 cursor-pointer"
           >
             Strategies
