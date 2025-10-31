@@ -183,9 +183,15 @@ export function Footer() {
               </a>
               . All rights reserved.
             </div>
-            <div className="flex items-center gap-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-3 text-sm text-muted-foreground flex-wrap justify-center">
               <span className="font-mono text-xs px-3 py-1 bg-profit-green/20 border border-profit-green/50 rounded text-profit-green">
                 ✓ Production Ready
+              </span>
+              <span className="font-mono text-xs px-3 py-1 bg-trust-blue/20 border border-trust-blue/50 rounded text-trust-blue">
+                {process.env.NEXT_PUBLIC_GIT_BRANCH || 'main'}
+              </span>
+              <span className="font-mono text-xs px-3 py-1 bg-warning-orange/20 border border-warning-orange/50 rounded text-warning-orange">
+                {process.env.NEXT_PUBLIC_GIT_COMMIT_HASH?.substring(0, 7) || 'unknown'}
               </span>
             </div>
           </div>

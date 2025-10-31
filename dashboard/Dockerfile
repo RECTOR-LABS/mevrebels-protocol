@@ -20,6 +20,14 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Accept build args for git info
+ARG GIT_BRANCH=unknown
+ARG GIT_COMMIT_HASH=unknown
+
+# Set as environment variables for Next.js build
+ENV NEXT_PUBLIC_GIT_BRANCH=$GIT_BRANCH
+ENV NEXT_PUBLIC_GIT_COMMIT_HASH=$GIT_COMMIT_HASH
+
 # Disable telemetry during build
 ENV NEXT_TELEMETRY_DISABLED 1
 
