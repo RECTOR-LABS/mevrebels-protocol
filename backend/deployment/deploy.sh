@@ -71,23 +71,35 @@ scp -r $REPO_PATH/backend/migrations/* $VPS_HOST:$DEPLOY_PATH/migrations/
 
 # Copy API Server (exclude node_modules - built on VPS)
 log_info "Copying API Server..."
-rsync -avz --exclude='node_modules' --exclude='.next' --exclude='dist' \
-  $REPO_PATH/backend/api-server/ $VPS_HOST:$DEPLOY_PATH/api-server/
+tar -czf /tmp/api-server.tar.gz -C $REPO_PATH/backend/api-server \
+  --exclude='node_modules' --exclude='.next' --exclude='dist' .
+scp /tmp/api-server.tar.gz $VPS_HOST:/tmp/
+ssh $VPS_HOST "tar -xzf /tmp/api-server.tar.gz -C $DEPLOY_PATH/api-server/ && rm /tmp/api-server.tar.gz"
+rm /tmp/api-server.tar.gz
 
 # Copy Analytics Service (exclude node_modules - built on VPS)
 log_info "Copying Analytics Service..."
-rsync -avz --exclude='node_modules' --exclude='__pycache__' --exclude='*.pyc' \
-  $REPO_PATH/backend/analytics/ $VPS_HOST:$DEPLOY_PATH/analytics/
+tar -czf /tmp/analytics.tar.gz -C $REPO_PATH/backend/analytics \
+  --exclude='node_modules' --exclude='__pycache__' --exclude='*.pyc' .
+scp /tmp/analytics.tar.gz $VPS_HOST:/tmp/
+ssh $VPS_HOST "tar -xzf /tmp/analytics.tar.gz -C $DEPLOY_PATH/analytics/ && rm /tmp/analytics.tar.gz"
+rm /tmp/analytics.tar.gz
 
 # Copy Pool Monitor (exclude Rust build artifacts - built on VPS)
 log_info "Copying Pool Monitor..."
-rsync -avz --exclude='target' --exclude='Cargo.lock' \
-  $REPO_PATH/backend/pool-monitor/ $VPS_HOST:$DEPLOY_PATH/pool-monitor/
+tar -czf /tmp/pool-monitor.tar.gz -C $REPO_PATH/backend/pool-monitor \
+  --exclude='target' --exclude='Cargo.lock' .
+scp /tmp/pool-monitor.tar.gz $VPS_HOST:/tmp/
+ssh $VPS_HOST "tar -xzf /tmp/pool-monitor.tar.gz -C $DEPLOY_PATH/pool-monitor/ && rm /tmp/pool-monitor.tar.gz"
+rm /tmp/pool-monitor.tar.gz
 
 # Copy Transaction Monitor (exclude Rust build artifacts - built on VPS)
 log_info "Copying Transaction Monitor..."
-rsync -avz --exclude='target' --exclude='Cargo.lock' \
-  $REPO_PATH/backend/transaction-monitor/ $VPS_HOST:$DEPLOY_PATH/transaction-monitor/
+tar -czf /tmp/transaction-monitor.tar.gz -C $REPO_PATH/backend/transaction-monitor \
+  --exclude='target' --exclude='Cargo.lock' .
+scp /tmp/transaction-monitor.tar.gz $VPS_HOST:/tmp/
+ssh $VPS_HOST "tar -xzf /tmp/transaction-monitor.tar.gz -C $DEPLOY_PATH/transaction-monitor/ && rm /tmp/transaction-monitor.tar.gz"
+rm /tmp/transaction-monitor.tar.gz
 
 # Copy deployment configs
 log_info "Copying deployment configs..."
