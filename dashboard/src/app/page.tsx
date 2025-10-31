@@ -1,12 +1,17 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 
 export default function Home() {
   const { connected } = useWallet();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className="relative min-h-screen">
@@ -79,7 +84,17 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
-              {connected ? (
+              {!mounted ? (
+                // Render placeholder during SSR to avoid hydration mismatch
+                <>
+                  <div className="px-8 py-4 bg-rebellious text-white font-bold rounded-lg opacity-0 cursor-pointer inline-block">
+                    BROWSE STRATEGIES
+                  </div>
+                  <div className="px-8 py-4 border-2 border-neutral-gray text-neutral-gray font-bold rounded-lg opacity-0 cursor-pointer inline-block">
+                    VIEW PITCH DECK
+                  </div>
+                </>
+              ) : connected ? (
                 <>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Link
@@ -98,20 +113,30 @@ export default function Home() {
                       CREATE STRATEGY
                     </Link>
                   </motion.div>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link
+                      href="/pitch-deck"
+                      className="px-8 py-4 border-2 border-neutral-gray text-neutral-gray font-bold rounded-lg hover:bg-neutral-gray hover:text-midnight-black transition-all cursor-pointer inline-block"
+                    >
+                      VIEW PITCH DECK
+                    </Link>
+                  </motion.div>
                 </>
               ) : (
-                <div className="px-8 py-4 border-2 border-warning-orange text-warning-orange font-bold rounded-lg animate-pulse">
-                  CONNECT WALLET TO START
-                </div>
+                <>
+                  <div className="px-8 py-4 border-2 border-warning-orange text-warning-orange font-bold rounded-lg animate-pulse">
+                    CONNECT WALLET TO START
+                  </div>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link
+                      href="/pitch-deck"
+                      className="px-8 py-4 border-2 border-neutral-gray text-neutral-gray font-bold rounded-lg hover:bg-neutral-gray hover:text-midnight-black transition-all cursor-pointer inline-block"
+                    >
+                      VIEW PITCH DECK
+                    </Link>
+                  </motion.div>
+                </>
               )}
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link
-                  href="/pitch-deck"
-                  className="px-8 py-4 border-2 border-neutral-gray text-neutral-gray font-bold rounded-lg hover:bg-neutral-gray hover:text-midnight-black transition-all cursor-pointer inline-block"
-                >
-                  VIEW PITCH DECK
-                </Link>
-              </motion.div>
             </motion.div>
           </motion.div>
 
