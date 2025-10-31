@@ -69,21 +69,25 @@ scp $REPO_PATH/backend/.env $VPS_HOST:$DEPLOY_PATH/
 # Copy database migrations
 scp -r $REPO_PATH/backend/migrations/* $VPS_HOST:$DEPLOY_PATH/migrations/
 
-# Copy API Server
+# Copy API Server (exclude node_modules - built on VPS)
 log_info "Copying API Server..."
-scp -r $REPO_PATH/backend/api-server/* $VPS_HOST:$DEPLOY_PATH/api-server/
+rsync -avz --exclude='node_modules' --exclude='.next' --exclude='dist' \
+  $REPO_PATH/backend/api-server/ $VPS_HOST:$DEPLOY_PATH/api-server/
 
-# Copy Analytics Service
+# Copy Analytics Service (exclude node_modules - built on VPS)
 log_info "Copying Analytics Service..."
-scp -r $REPO_PATH/backend/analytics/* $VPS_HOST:$DEPLOY_PATH/analytics/
+rsync -avz --exclude='node_modules' --exclude='__pycache__' --exclude='*.pyc' \
+  $REPO_PATH/backend/analytics/ $VPS_HOST:$DEPLOY_PATH/analytics/
 
-# Copy Pool Monitor
+# Copy Pool Monitor (exclude Rust build artifacts - built on VPS)
 log_info "Copying Pool Monitor..."
-scp -r $REPO_PATH/backend/pool-monitor/* $VPS_HOST:$DEPLOY_PATH/pool-monitor/
+rsync -avz --exclude='target' --exclude='Cargo.lock' \
+  $REPO_PATH/backend/pool-monitor/ $VPS_HOST:$DEPLOY_PATH/pool-monitor/
 
-# Copy Transaction Monitor
+# Copy Transaction Monitor (exclude Rust build artifacts - built on VPS)
 log_info "Copying Transaction Monitor..."
-scp -r $REPO_PATH/backend/transaction-monitor/* $VPS_HOST:$DEPLOY_PATH/transaction-monitor/
+rsync -avz --exclude='target' --exclude='Cargo.lock' \
+  $REPO_PATH/backend/transaction-monitor/ $VPS_HOST:$DEPLOY_PATH/transaction-monitor/
 
 # Copy deployment configs
 log_info "Copying deployment configs..."
