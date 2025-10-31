@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 
 // Animation variants
@@ -758,10 +759,13 @@ export default function PitchDeckPage() {
                   {/* Profile Image & Basic Info */}
                   <div className="md:col-span-1 text-center md:text-left space-y-4">
                     <div className="w-32 h-32 mx-auto md:mx-0 rounded-full border-4 border-rebellious/30 overflow-hidden">
-                      <img
+                      <Image
                         src="https://avatars.githubusercontent.com/u/95009642"
                         alt="RECTOR Profile"
+                        width={128}
+                        height={128}
                         className="w-full h-full object-cover"
+                        priority
                       />
                     </div>
                     <div>
