@@ -377,6 +377,17 @@ export default function PitchDeckPage() {
                   'Treasury-funded development',
                 ]}
               />
+              <SolutionCard
+                icon="💎"
+                title="Flash Loan Arbitrage"
+                description="Execute strategies with zero capital using our custom WSOL flash loan protocol. Capital-free arbitrage for everyone."
+                features={[
+                  '0.09% flash loan fee (9 basis points)',
+                  'Custom WSOL implementation',
+                  'Atomic execution guarantees',
+                  'Pool-based liquidity model',
+                ]}
+              />
             </AnimatedGrid>
 
             {/* How It Works */}
@@ -746,8 +757,12 @@ export default function PitchDeckPage() {
                 <div className="grid md:grid-cols-3 gap-8">
                   {/* Profile Image & Basic Info */}
                   <div className="md:col-span-1 text-center md:text-left space-y-4">
-                    <div className="w-32 h-32 mx-auto md:mx-0 bg-gradient-to-br from-rebellious to-trust-blue rounded-full flex items-center justify-center text-white text-5xl font-black border-4 border-rebellious/30">
-                      R
+                    <div className="w-32 h-32 mx-auto md:mx-0 rounded-full border-4 border-rebellious/30 overflow-hidden">
+                      <img
+                        src="https://avatars.githubusercontent.com/u/95009642"
+                        alt="RECTOR Profile"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div>
                       <h3 className="text-2xl font-black text-white mb-1">RECTOR</h3>

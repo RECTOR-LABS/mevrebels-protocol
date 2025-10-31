@@ -20,43 +20,79 @@ export function CodeBlock({ language, code }: CodeBlockProps) {
     }
   };
 
-  // Simple syntax highlighting for common tokens
+  // Enhanced syntax highlighting for common tokens
   const highlightCode = (code: string, lang: string) => {
+    let highlighted = code;
+
     if (lang === 'json') {
-      return code
-        .replace(/"([^"]+)":/g, '<span class="text-trust-blue">"$1"</span>:')
-        .replace(/: "([^"]+)"/g, ': <span class="text-profit-green">"$1"</span>')
-        .replace(/: (\d+)/g, ': <span class="text-warning-orange">$1</span>')
-        .replace(/: (true|false|null)/g, ': <span class="text-rebellious">$1</span>');
+      highlighted = highlighted
+        // Property keys
+        .replace(/"([^"]+)"(\s*):/g, '<span class="text-trust-blue">"$1"</span>$2:')
+        // String values
+        .replace(/:\s*"([^"]+)"/g, ': <span class="text-profit-green">"$1"</span>')
+        // Numbers (including decimals)
+        .replace(/:\s*(-?\d+\.?\d*)/g, ': <span class="text-warning-orange">$1</span>')
+        // Booleans and null
+        .replace(/:\s*(true|false|null)/g, ': <span class="text-rebellious">$1</span>')
+        // Brackets and braces
+        .replace(/([{}\[\]])/g, '<span class="text-white">$1</span>');
     }
 
     if (lang === 'javascript' || lang === 'typescript') {
-      return code
-        .replace(/\b(const|let|var|function|async|await|return|if|else|for|while|import|export|from|class|new|try|catch)\b/g, '<span class="text-rebellious">$1</span>')
-        .replace(/\b(fetch|console|JSON|WebSocket|document|window)\b/g, '<span class="text-trust-blue">$1</span>')
+      highlighted = highlighted
+        // Comments first (to avoid highlighting keywords in comments)
+        .replace(/\/\/(.+)$/gm, '<span class="text-neutral-gray italic">//$1</span>')
+        // Keywords
+        .replace(/\b(const|let|var|function|async|await|return|if|else|for|while|import|export|from|class|new|try|catch|switch|case|break|continue|typeof|instanceof)\b/g, '<span class="text-rebellious font-semibold">$1</span>')
+        // Built-in objects and functions
+        .replace(/\b(fetch|console|JSON|WebSocket|document|window|Math|Date|Array|Object|Promise|Error)\b/g, '<span class="text-trust-blue">$1</span>')
+        // Function calls
+        .replace(/\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/g, '<span class="text-warning-orange">$1</span>(')
+        // Template literals (backticks)
+        .replace(/`([^`]*)`/g, '<span class="text-profit-green">`$1`</span>')
+        // Strings (single quotes)
         .replace(/'([^']+)'/g, '<span class="text-profit-green">\'$1\'</span>')
+        // Strings (double quotes)
         .replace(/"([^"]+)"/g, '<span class="text-profit-green">"$1"</span>')
-        .replace(/`([^`]+)`/g, '<span class="text-profit-green">`$1`</span>')
-        .replace(/\/\/(.+)$/gm, '<span class="text-neutral-gray">//$1</span>');
+        // Numbers
+        .replace(/\b(\d+\.?\d*)\b/g, '<span class="text-warning-orange">$1</span>');
     }
 
     if (lang === 'python') {
-      return code
-        .replace(/\b(import|from|def|class|return|if|else|elif|for|while|try|except|with|as)\b/g, '<span class="text-rebellious">$1</span>')
-        .replace(/\b(requests|json|print)\b/g, '<span class="text-trust-blue">$1</span>')
+      highlighted = highlighted
+        // Comments first
+        .replace(/#(.+)$/gm, '<span class="text-neutral-gray italic">#$1</span>')
+        // Keywords
+        .replace(/\b(import|from|def|class|return|if|else|elif|for|while|try|except|with|as|pass|break|continue|lambda|yield|raise|assert|finally)\b/g, '<span class="text-rebellious font-semibold">$1</span>')
+        // Built-in functions and modules
+        .replace(/\b(requests|json|print|len|str|int|float|list|dict|set|tuple|range)\b/g, '<span class="text-trust-blue">$1</span>')
+        // Function calls
+        .replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/g, '<span class="text-warning-orange">$1</span>(')
+        // Strings (single quotes)
         .replace(/'([^']+)'/g, '<span class="text-profit-green">\'$1\'</span>')
+        // Strings (double quotes)
         .replace(/"([^"]+)"/g, '<span class="text-profit-green">"$1"</span>')
-        .replace(/#(.+)$/gm, '<span class="text-neutral-gray">#$1</span>');
+        // Numbers
+        .replace(/\b(\d+\.?\d*)\b/g, '<span class="text-warning-orange">$1</span>');
     }
 
     if (lang === 'bash' || lang === 'curl') {
-      return code
-        .replace(/^(curl|npm|git|docker|cd|ls|mkdir|cat)\b/gm, '<span class="text-rebellious">$1</span>')
-        .replace(/(https?:\/\/[^\s]+)/g, '<span class="text-trust-blue">$1</span>')
-        .replace(/#(.+)$/gm, '<span class="text-neutral-gray">#$1</span>');
+      highlighted = highlighted
+        // Comments first
+        .replace(/#(.+)$/gm, '<span class="text-neutral-gray italic">#$1</span>')
+        // Commands at start of line
+        .replace(/^(curl|npm|git|docker|cd|ls|mkdir|cat|echo|chmod|chown|grep|find|sed|awk|tar|zip|unzip|wget)\b/gm, '<span class="text-rebellious font-semibold">$1</span>')
+        // Flags and options
+        .replace(/\s(-[a-zA-Z0-9-]+)/g, ' <span class="text-warning-orange">$1</span>')
+        // URLs
+        .replace(/(https?:\/\/[^\s'"]+)/g, '<span class="text-trust-blue underline">$1</span>')
+        // Strings (single quotes)
+        .replace(/'([^']+)'/g, '<span class="text-profit-green">\'$1\'</span>')
+        // Strings (double quotes)
+        .replace(/"([^"]+)"/g, '<span class="text-profit-green">"$1"</span>');
     }
 
-    return code;
+    return highlighted;
   };
 
   const languageLabels: Record<string, string> = {
