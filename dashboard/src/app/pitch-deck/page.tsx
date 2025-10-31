@@ -76,15 +76,21 @@ function AnimatedGrid({ children, delay = 0 }: { children: React.ReactNode; dela
   );
 }
 
-// Animated 2-column grid
+// Animated 2-column grid - centered when only 2 items
 function AnimatedGrid2Col({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
+  // Check number of children to determine if centering is needed
+  const childCount = React.Children.count(children);
+  const gridClass = childCount === 2
+    ? "grid md:grid-cols-2 gap-8 mb-12 max-w-5xl mx-auto"
+    : "grid md:grid-cols-2 gap-8 mb-12";
+
   return (
     <motion.div
       ref={ref}
-      className="grid md:grid-cols-2 gap-8 mb-12"
+      className={gridClass}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={staggerContainer}
@@ -719,6 +725,186 @@ export default function PitchDeckPage() {
                 />
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Developer Section */}
+      <section className="py-20 border-b border-border bg-midnight-black/50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <ScrollAnimateSection>
+              <SectionHeader
+                label="THE DEVELOPER"
+                title="Built by RECTOR"
+                subtitle="Solana maximalist and blockchain innovator with a proven track record in DeFi architecture."
+              />
+            </ScrollAnimateSection>
+
+            <ScrollAnimateSection>
+              <div className="bg-gradient-to-br from-rebellious/10 to-midnight-black border-2 border-rebellious rounded-lg p-8 md:p-12">
+                <div className="grid md:grid-cols-3 gap-8">
+                  {/* Profile Image & Basic Info */}
+                  <div className="md:col-span-1 text-center md:text-left space-y-4">
+                    <div className="w-32 h-32 mx-auto md:mx-0 bg-gradient-to-br from-rebellious to-trust-blue rounded-full flex items-center justify-center text-white text-5xl font-black border-4 border-rebellious/30">
+                      R
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-black text-white mb-1">RECTOR</h3>
+                      <p className="text-rebellious font-mono text-sm mb-2">@rz1989s</p>
+                      <p className="text-neutral-gray text-sm mb-4">Founder, RECTOR LABS</p>
+                      <div className="flex items-center justify-center md:justify-start gap-3">
+                        <a
+                          href="https://github.com/rz1989s"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 bg-midnight-black border border-border rounded-lg hover:border-rebellious transition-colors"
+                          aria-label="GitHub Profile"
+                        >
+                          <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                          </svg>
+                        </a>
+                        <a
+                          href="https://twitter.com/rz1989sol"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 bg-midnight-black border border-border rounded-lg hover:border-rebellious transition-colors"
+                          aria-label="Twitter Profile"
+                        >
+                          <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                          </svg>
+                        </a>
+                        <a
+                          href="https://docs.rectorspace.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 bg-midnight-black border border-border rounded-lg hover:border-rebellious transition-colors"
+                          aria-label="Website"
+                        >
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bio & Achievements */}
+                  <div className="md:col-span-2 space-y-6">
+                    {/* Bio */}
+                    <div>
+                      <h4 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                        <span className="text-xl">💡</span>
+                        About
+                      </h4>
+                      <p className="text-neutral-gray leading-relaxed">
+                        "Building for eternity" — A Solana maximalist and blockchain innovator focused on decentralized finance architecture and high-performance systems. Founder of RECTOR LABS, pioneering MEV democratization and DeFi innovation on Solana.
+                      </p>
+                    </div>
+
+                    {/* GitHub Stats */}
+                    <div>
+                      <h4 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                        <span className="text-xl">📊</span>
+                        GitHub Stats
+                      </h4>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div className="bg-midnight-black/50 border border-border rounded-lg p-4 text-center hover:border-profit-green transition-colors">
+                          <div className="text-2xl font-black font-mono text-profit-green mb-1">24</div>
+                          <div className="text-xs text-neutral-gray">Repositories</div>
+                        </div>
+                        <div className="bg-midnight-black/50 border border-border rounded-lg p-4 text-center hover:border-profit-green transition-colors">
+                          <div className="text-2xl font-black font-mono text-profit-green mb-1">244</div>
+                          <div className="text-xs text-neutral-gray">Stars Earned</div>
+                        </div>
+                        <div className="bg-midnight-black/50 border border-border rounded-lg p-4 text-center hover:border-profit-green transition-colors">
+                          <div className="text-2xl font-black font-mono text-profit-green mb-1">20</div>
+                          <div className="text-xs text-neutral-gray">Followers</div>
+                        </div>
+                        <div className="bg-midnight-black/50 border border-border rounded-lg p-4 text-center hover:border-profit-green transition-colors">
+                          <div className="text-2xl font-black font-mono text-profit-green mb-1">3x</div>
+                          <div className="text-xs text-neutral-gray">Pair Extraordinaire</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Notable Projects */}
+                    <div>
+                      <h4 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                        <span className="text-xl">🚀</span>
+                        Notable Projects
+                      </h4>
+                      <div className="space-y-3">
+                        <div className="bg-midnight-black/50 border border-border rounded-lg p-4 hover:border-trust-blue transition-colors">
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1">
+                              <h5 className="text-white font-bold mb-1">recMEV-installer</h5>
+                              <p className="text-sm text-neutral-gray mb-2">High-performance Solana arbitrage engine installer</p>
+                              <div className="flex items-center gap-2 text-xs">
+                                <span className="px-2 py-1 bg-trust-blue/20 border border-trust-blue/50 rounded text-trust-blue">Shell</span>
+                                <span className="px-2 py-1 bg-rebellious/20 border border-rebellious/50 rounded text-rebellious">Solana</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="bg-midnight-black/50 border border-border rounded-lg p-4 hover:border-trust-blue transition-colors">
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1">
+                              <h5 className="text-white font-bold mb-1">claude-code-statusline</h5>
+                              <p className="text-sm text-neutral-gray mb-2">Terminal statusline tool with cost tracking — 126 stars, 8 forks</p>
+                              <div className="flex items-center gap-2 text-xs">
+                                <span className="px-2 py-1 bg-trust-blue/20 border border-trust-blue/50 rounded text-trust-blue">TypeScript</span>
+                                <span className="px-2 py-1 bg-profit-green/20 border border-profit-green/50 rounded text-profit-green">126 ⭐</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="bg-midnight-black/50 border border-border rounded-lg p-4 hover:border-trust-blue transition-colors">
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1">
+                              <h5 className="text-white font-bold mb-1">recSOL</h5>
+                              <p className="text-sm text-neutral-gray mb-2">Liquid Staking Token maintaining 1:1 value with SOL</p>
+                              <div className="flex items-center gap-2 text-xs">
+                                <span className="px-2 py-1 bg-trust-blue/20 border border-trust-blue/50 rounded text-trust-blue">Rust</span>
+                                <span className="px-2 py-1 bg-rebellious/20 border border-rebellious/50 rounded text-rebellious">DeFi</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Tech Stack */}
+                    <div>
+                      <h4 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                        <span className="text-xl">🛠️</span>
+                        Tech Stack
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {['Rust', 'TypeScript', 'Python', 'React', 'Node.js', 'Solana', 'Web3.js', 'Docker', 'PostgreSQL'].map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-3 py-1 bg-midnight-black/50 border border-border rounded text-sm text-white hover:border-rebellious transition-colors"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quote */}
+                <div className="mt-8 pt-8 border-t border-border">
+                  <blockquote className="text-center">
+                    <p className="text-xl text-white italic mb-2">"23 days from idea to production-ready MEV infrastructure"</p>
+                    <cite className="text-sm text-neutral-gray">— Execution speed meets technical excellence</cite>
+                  </blockquote>
+                </div>
+              </div>
+            </ScrollAnimateSection>
           </div>
         </div>
       </section>

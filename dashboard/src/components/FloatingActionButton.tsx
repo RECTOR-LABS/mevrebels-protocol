@@ -10,9 +10,6 @@ export function FloatingActionButton() {
   const [isExpanded, setIsExpanded] = useState(false);
   const pathname = usePathname();
 
-  // Hide FAB on pitch-deck page (no need to link to itself)
-  const shouldHide = pathname === '/pitch-deck';
-
   useEffect(() => {
     const toggleVisibility = () => {
       // Show button after scrolling down 300px
@@ -27,8 +24,6 @@ export function FloatingActionButton() {
     window.addEventListener('scroll', toggleVisibility);
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
-
-  if (shouldHide) return null;
 
   return (
     <AnimatePresence>
