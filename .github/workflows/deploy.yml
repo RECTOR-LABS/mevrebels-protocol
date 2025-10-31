@@ -67,9 +67,12 @@ jobs:
             # Navigate to deployment directory
             cd /home/mevrebels/dashboard || exit 1
 
-            # Pull latest image from GHCR
+            # Pull image from GHCR (use branch name as tag)
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            docker pull ghcr.io/rector-labs/mevrebels-dashboard:latest
+            docker pull ghcr.io/rector-labs/mevrebels-dashboard:${{ github.ref_name }}
+
+            # Update docker-compose.yml to use the correct image tag
+            sed -i "s|image: ghcr.io/rector-labs/mevrebels-dashboard:.*|image: ghcr.io/rector-labs/mevrebels-dashboard:${{ github.ref_name }}|g" docker-compose.yml
 
             # Determine active deployment (blue or green)
             ACTIVE=$(docker ps --filter "label=com.mevrebels.deployment" --format "{{.Labels}}" | grep -oP 'blue|green' | head -1)
@@ -90,8 +93,8 @@ jobs:
             echo "Active deployment: $ACTIVE"
             echo "Standby deployment: $STANDBY"
 
-            # Start standby container with new image
-            docker-compose up -d mevrebels-$STANDBY
+            # Start standby container with new image (Docker Compose v2)
+            docker compose up -d mevrebels-$STANDBY
 
             # Wait for standby to be healthy
             echo "Waiting for $STANDBY to be healthy..."
@@ -101,18 +104,18 @@ jobs:
             if curl -f http://localhost:$STANDBY_PORT > /dev/null 2>&1; then
               echo "$STANDBY is healthy. Switching traffic..."
 
-              # Update Traefik labels to route traffic to standby
-              docker stop mevrebels-$ACTIVE
-              docker rm mevrebels-$ACTIVE
+              # Stop and remove active container
+              docker stop mevrebels-$ACTIVE || true
+              docker rm mevrebels-$ACTIVE || true
 
-              # Rename standby to active
-              docker-compose up -d mevrebels-$STANDBY
+              # Ensure standby is running
+              docker compose up -d mevrebels-$STANDBY
 
               echo "Deployment successful! Traffic switched to $STANDBY"
             else
               echo "Health check failed for $STANDBY. Rolling back..."
-              docker stop mevrebels-$STANDBY
-              docker rm mevrebels-$STANDBY
+              docker stop mevrebels-$STANDBY || true
+              docker rm mevrebels-$STANDBY || true
               exit 1
             fi
 
