@@ -297,46 +297,84 @@ export default function PitchDeckPage() {
             {/* Market Opportunity */}
             <ScrollAnimateSection>
               <motion.div
-                className="bg-rebellious/10 border-2 border-rebellious rounded-lg p-8"
-                whileHover={{ scale: 1.02 }}
+                className="relative bg-gradient-to-br from-rebellious/20 via-midnight-black to-rebellious/10 border-2 border-rebellious/50 rounded-2xl p-8 overflow-hidden shadow-2xl"
+                whileHover={{ scale: 1.01, borderColor: '#ef4444' }}
                 transition={{ duration: 0.3 }}
               >
-                <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                  <span className="text-3xl">📈</span>
-                  Market Opportunity
-                </h3>
-                <motion.div
-                  className="grid md:grid-cols-3 gap-6 text-center"
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={staggerContainer}
-                >
-                  <motion.div variants={scaleIn}>
-                    <div className="text-4xl font-black font-mono text-rebellious mb-2">
-                      $2.8B
+                {/* Animated Background Pattern */}
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ef444410_1px,transparent_1px),linear-gradient(to_bottom,#ef444410_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-30" />
+
+                {/* Content */}
+                <div className="relative z-10">
+                  <div className="text-center mb-8">
+                    <div className="inline-flex items-center gap-3 px-6 py-3 bg-rebellious/20 border border-rebellious/50 rounded-full mb-4">
+                      <span className="text-3xl">📈</span>
+                      <span className="text-xl font-black text-white uppercase tracking-wider">Market Opportunity</span>
                     </div>
-                    <div className="text-sm text-neutral-gray">
-                      Annual MEV on Solana (2024)
-                    </div>
+                    <p className="text-neutral-gray max-w-2xl mx-auto">
+                      Massive untapped value in Solana's DeFi ecosystem waiting to be democratized
+                    </p>
+                  </div>
+
+                  <motion.div
+                    className="grid md:grid-cols-3 gap-6"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={staggerContainer}
+                  >
+                    <motion.div
+                      variants={scaleIn}
+                      className="group relative bg-midnight-black/50 backdrop-blur-sm border border-border hover:border-rebellious rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-rebellious/20"
+                    >
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-rebellious/10 rounded-full blur-3xl group-hover:bg-rebellious/20 transition-all" />
+                      <div className="relative">
+                        <div className="text-5xl font-black font-mono bg-gradient-to-r from-rebellious to-rebellious-red bg-clip-text text-transparent mb-3">
+                          $2.8B
+                        </div>
+                        <div className="text-xs uppercase tracking-wider text-neutral-gray font-semibold mb-1">
+                          Annual MEV on Solana
+                        </div>
+                        <div className="text-xs text-rebellious/70">(2024 Data)</div>
+                      </div>
+                    </motion.div>
+
+                    <motion.div
+                      variants={scaleIn}
+                      className="group relative bg-midnight-black/50 backdrop-blur-sm border border-border hover:border-trust-blue rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-trust-blue/20"
+                    >
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-trust-blue/10 rounded-full blur-3xl group-hover:bg-trust-blue/20 transition-all" />
+                      <div className="relative">
+                        <div className="text-5xl font-black font-mono bg-gradient-to-r from-trust-blue to-trust-blue/70 bg-clip-text text-transparent mb-3">
+                          10M+
+                        </div>
+                        <div className="text-xs uppercase tracking-wider text-neutral-gray font-semibold mb-1">
+                          Active Solana Wallets
+                        </div>
+                        <div className="text-xs text-trust-blue/70">Potential Users</div>
+                      </div>
+                    </motion.div>
+
+                    <motion.div
+                      variants={scaleIn}
+                      className="group relative bg-midnight-black/50 backdrop-blur-sm border border-border hover:border-profit-green rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-profit-green/20"
+                    >
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-profit-green/10 rounded-full blur-3xl group-hover:bg-profit-green/20 transition-all" />
+                      <div className="relative">
+                        <div className="text-5xl font-black font-mono bg-gradient-to-r from-profit-green to-profit-green/70 bg-clip-text text-transparent mb-3">
+                          $140B
+                        </div>
+                        <div className="text-xs uppercase tracking-wider text-neutral-gray font-semibold mb-1">
+                          Total DEX Volume
+                        </div>
+                        <div className="text-xs text-profit-green/70">Annual Trading</div>
+                      </div>
+                    </motion.div>
                   </motion.div>
-                  <motion.div variants={scaleIn}>
-                    <div className="text-4xl font-black font-mono text-rebellious mb-2">
-                      10M+
-                    </div>
-                    <div className="text-sm text-neutral-gray">
-                      Active Solana Wallets
-                    </div>
-                  </motion.div>
-                  <motion.div variants={scaleIn}>
-                    <div className="text-4xl font-black font-mono text-rebellious mb-2">
-                      $140B
-                    </div>
-                    <div className="text-sm text-neutral-gray">
-                      Total DEX Volume (Annual)
-                    </div>
-                  </motion.div>
-                </motion.div>
+                </div>
+
+                {/* Bottom Gradient Line */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-rebellious to-transparent" />
               </motion.div>
             </ScrollAnimateSection>
           </div>
@@ -718,24 +756,102 @@ export default function PitchDeckPage() {
             </div>
 
             {/* Market Position */}
-            <div className="bg-rebellious/10 border-2 border-rebellious rounded-lg p-8">
-              <h3 className="text-2xl font-bold text-white mb-6 text-center">
-                Competitive Advantage
-              </h3>
-              <div className="grid md:grid-cols-3 gap-6">
-                <AdvantageCard
-                  title="First Mover"
-                  description="No decentralized MEV marketplace exists on Solana today."
-                />
-                <AdvantageCard
-                  title="Community Network Effects"
-                  description="More strategies = more opportunities = more users."
-                />
-                <AdvantageCard
-                  title="Infrastructure Moat"
-                  description="23 days proves execution speed. First to market wins."
-                />
+            <div className="relative bg-gradient-to-br from-rebellious/10 via-midnight-black to-trust-blue/10 border-2 border-rebellious/50 rounded-2xl p-10 overflow-hidden shadow-2xl">
+              {/* Animated Corner Accents */}
+              <div className="absolute top-0 left-0 w-32 h-32 bg-rebellious/20 rounded-full blur-3xl" />
+              <div className="absolute bottom-0 right-0 w-32 h-32 bg-trust-blue/20 rounded-full blur-3xl" />
+
+              {/* Header */}
+              <div className="relative z-10 text-center mb-10">
+                <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-rebellious/30 to-trust-blue/30 border border-rebellious/50 rounded-full mb-4">
+                  <span className="text-2xl">⚡</span>
+                  <span className="text-2xl font-black text-white uppercase tracking-wider">Competitive Advantage</span>
+                </div>
+                <p className="text-neutral-gray max-w-2xl mx-auto">
+                  Why MEVrebels will dominate the decentralized MEV landscape on Solana
+                </p>
               </div>
+
+              {/* Advantage Cards */}
+              <div className="relative z-10 grid md:grid-cols-3 gap-8">
+                <motion.div
+                  className="group relative bg-midnight-black/60 backdrop-blur-sm border-2 border-border hover:border-rebellious rounded-xl p-8 transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-rebellious/30"
+                  whileHover={{ y: -8 }}
+                >
+                  {/* Icon Badge */}
+                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                    <div className="w-14 h-14 bg-gradient-to-br from-rebellious to-rebellious-red rounded-full flex items-center justify-center border-4 border-midnight-black shadow-lg shadow-rebellious/50">
+                      <span className="text-2xl">🚀</span>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="mt-6 text-center">
+                    <h4 className="text-xl font-black text-white mb-3 group-hover:text-rebellious transition-colors">
+                      First Mover
+                    </h4>
+                    <p className="text-sm text-neutral-gray leading-relaxed group-hover:text-white transition-colors">
+                      No decentralized MEV marketplace exists on Solana today. We're defining the category.
+                    </p>
+                  </div>
+
+                  {/* Bottom Accent */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-rebellious to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                </motion.div>
+
+                <motion.div
+                  className="group relative bg-midnight-black/60 backdrop-blur-sm border-2 border-border hover:border-trust-blue rounded-xl p-8 transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-trust-blue/30"
+                  whileHover={{ y: -8 }}
+                >
+                  {/* Icon Badge */}
+                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                    <div className="w-14 h-14 bg-gradient-to-br from-trust-blue to-trust-blue/70 rounded-full flex items-center justify-center border-4 border-midnight-black shadow-lg shadow-trust-blue/50">
+                      <span className="text-2xl">🔄</span>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="mt-6 text-center">
+                    <h4 className="text-xl font-black text-white mb-3 group-hover:text-trust-blue transition-colors">
+                      Network Effects
+                    </h4>
+                    <p className="text-sm text-neutral-gray leading-relaxed group-hover:text-white transition-colors">
+                      More strategies = more opportunities = more users. Self-reinforcing growth loop.
+                    </p>
+                  </div>
+
+                  {/* Bottom Accent */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-trust-blue to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                </motion.div>
+
+                <motion.div
+                  className="group relative bg-midnight-black/60 backdrop-blur-sm border-2 border-border hover:border-profit-green rounded-xl p-8 transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-profit-green/30"
+                  whileHover={{ y: -8 }}
+                >
+                  {/* Icon Badge */}
+                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                    <div className="w-14 h-14 bg-gradient-to-br from-profit-green to-profit-green/70 rounded-full flex items-center justify-center border-4 border-midnight-black shadow-lg shadow-profit-green/50">
+                      <span className="text-2xl">⚙️</span>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="mt-6 text-center">
+                    <h4 className="text-xl font-black text-white mb-3 group-hover:text-profit-green transition-colors">
+                      Infrastructure Moat
+                    </h4>
+                    <p className="text-sm text-neutral-gray leading-relaxed group-hover:text-white transition-colors">
+                      23 days from zero to production proves execution speed. First to market wins.
+                    </p>
+                  </div>
+
+                  {/* Bottom Accent */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-profit-green to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                </motion.div>
+              </div>
+
+              {/* Bottom Decorative Line */}
+              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-rebellious to-transparent" />
             </div>
           </div>
         </div>

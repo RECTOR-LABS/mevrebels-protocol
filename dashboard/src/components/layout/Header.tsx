@@ -19,8 +19,8 @@ export function Header() {
           <Link href="/" className="group flex items-center space-x-3 cursor-pointer">
             <div className="relative">
               {/* Logo Icon */}
-              <div className="w-10 h-10 bg-gradient-to-br from-rebellious to-rebellious-red rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-                <span className="text-white text-xl font-black">M</span>
+              <div className="w-10 h-10 transform group-hover:scale-110 transition-transform duration-300">
+                <img src="/logo.svg" alt="MEVrebels Logo" className="w-full h-full" />
               </div>
               {/* Glow effect */}
               <div className="absolute inset-0 bg-rebellious/30 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

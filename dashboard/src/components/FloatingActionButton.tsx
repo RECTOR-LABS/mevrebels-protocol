@@ -61,25 +61,45 @@ export function FloatingActionButton() {
             {/* Button */}
             <Link href="/pitch-deck">
               <motion.button
-                className="relative w-16 h-16 bg-rebellious rounded-full shadow-lg hover:shadow-2xl transition-shadow flex items-center justify-center group overflow-hidden cursor-pointer"
-                whileHover={{ scale: 1.1 }}
+                className="relative w-20 h-20 bg-gradient-to-br from-rebellious via-rebellious-red to-rebellious rounded-full shadow-xl shadow-rebellious/50 hover:shadow-2xl hover:shadow-rebellious/70 transition-all flex items-center justify-center group overflow-visible cursor-pointer"
+                whileHover={{ scale: 1.15, rotate: [0, -5, 5, 0] }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="View Pitch Deck"
               >
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-rebellious to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* Inner glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-rebellious-red to-rebellious rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                {/* Rotating gradient border */}
+                <motion.div
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: 'conic-gradient(from 0deg, #ef4444, #3b82f6, #10b981, #ef4444)',
+                    padding: '2px',
+                    WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                    WebkitMaskComposite: 'xor',
+                    maskComposite: 'exclude',
+                  }}
+                  animate={{
+                    rotate: 360,
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
 
                 {/* Icon */}
-                <div className="relative z-10 text-white text-2xl font-bold">
+                <div className="relative z-10 text-white text-3xl font-bold group-hover:scale-110 transition-transform">
                   📊
                 </div>
 
-                {/* Pulse ring */}
+                {/* Multiple pulse rings */}
                 <motion.div
                   className="absolute inset-0 rounded-full border-2 border-rebellious"
                   animate={{
-                    scale: [1, 1.5],
-                    opacity: [0.8, 0],
+                    scale: [1, 1.8],
+                    opacity: [0.6, 0],
                   }}
                   transition={{
                     duration: 2,
@@ -87,6 +107,35 @@ export function FloatingActionButton() {
                     ease: "easeOut",
                   }}
                 />
+                <motion.div
+                  className="absolute inset-0 rounded-full border-2 border-trust-blue"
+                  animate={{
+                    scale: [1, 1.8],
+                    opacity: [0.6, 0],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeOut",
+                    delay: 0.5,
+                  }}
+                />
+                <motion.div
+                  className="absolute inset-0 rounded-full border-2 border-profit-green"
+                  animate={{
+                    scale: [1, 1.8],
+                    opacity: [0.6, 0],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeOut",
+                    delay: 1,
+                  }}
+                />
+
+                {/* Static outer ring */}
+                <div className="absolute inset-0 rounded-full border border-rebellious/30 scale-150" />
               </motion.button>
             </Link>
           </div>

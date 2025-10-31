@@ -1,0 +1,26 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="24" cy="24" r="22" fill="#1a1a1a" stroke="#ef4444" stroke-width="2"/>
+
+  <!-- Revolutionary Fist/Lightning Hybrid -->
+  <g transform="translate(24, 24)">
+    <!-- Lightning Bolt (MEV Speed/Power) -->
+    <path d="M2 -12 L-4 0 L2 0 L-2 12 L8 -2 L2 -2 Z"
+          fill="#ef4444"
+          stroke="#ef4444"
+          stroke-width="0.5"
+          stroke-linejoin="miter"/>
+
+    <!-- Stylized "M" integrated into design -->
+    <path d="M-8 8 L-8 -8 L-3 -2 L2 -8 L7 -2 L7 8"
+          stroke="#3b82f6"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          fill="none"
+          opacity="0.6"/>
+  </g>
+
+  <!-- Outer Glow Ring -->
+  <circle cx="24" cy="24" r="20" fill="none" stroke="#ef4444" stroke-width="0.5" opacity="0.3"/>
+</svg>

@@ -24,6 +24,13 @@ export const metadata: Metadata = {
   authors: [{ name: "MEVrebels Protocol" }],
   creator: "MEVrebels Protocol",
   publisher: "MEVrebels Protocol",
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/logo.svg', sizes: '48x48', type: 'image/svg+xml' },
+    ],
+    apple: '/logo.svg',
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
