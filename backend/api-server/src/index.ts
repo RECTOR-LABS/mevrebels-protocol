@@ -126,7 +126,11 @@ async function start() {
         break;
       } catch (error) {
         retries--;
-        if (retries === 0) throw error;
+        logger.error(`Database connection error: ${error instanceof Error ? error.message : String(error)}`);
+        if (retries === 0) {
+          logger.error('Full error details:', error);
+          throw error;
+        }
         logger.warn(`Database connection failed, retrying... (${retries} attempts left)`);
         await new Promise(resolve => setTimeout(resolve, 2000));
       }
