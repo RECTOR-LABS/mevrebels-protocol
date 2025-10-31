@@ -49,7 +49,8 @@ export const strategiesApi = {
    * Get all strategies
    */
   async getAll(): Promise<Strategy[]> {
-    return apiRequest<Strategy[]>('/api/strategies');
+    const response = await apiRequest<{ strategies: Strategy[]; total: number; limit: number; offset: number }>('/api/strategies');
+    return response.strategies;
   },
 
   /**
