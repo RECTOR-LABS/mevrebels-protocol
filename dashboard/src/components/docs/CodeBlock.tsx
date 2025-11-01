@@ -42,18 +42,19 @@ export function CodeBlock({ language, code }: CodeBlockProps) {
       highlighted = highlighted
         // Comments first (to avoid highlighting keywords in comments)
         .replace(/\/\/(.+)$/gm, '<span class="text-neutral-gray italic">//$1</span>')
+        // Strings BEFORE other replacements (to avoid matching HTML attribute quotes)
+        // Template literals (backticks)
+        .replace(/`([^`]*)`/g, '<span class="text-profit-green">`$1`</span>')
+        // Single quotes
+        .replace(/'([^']+)'/g, '<span class="text-profit-green">\'$1\'</span>')
+        // Double quotes
+        .replace(/"([^"]+)"/g, '<span class="text-profit-green">"$1"</span>')
         // Keywords
         .replace(/\b(const|let|var|function|async|await|return|if|else|for|while|import|export|from|class|new|try|catch|switch|case|break|continue|typeof|instanceof)\b/g, '<span class="text-rebellious font-semibold">$1</span>')
         // Built-in objects and functions
         .replace(/\b(fetch|console|JSON|WebSocket|document|window|Math|Date|Array|Object|Promise|Error)\b/g, '<span class="text-trust-blue">$1</span>')
         // Function calls
         .replace(/\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/g, '<span class="text-warning-orange">$1</span>(')
-        // Template literals (backticks)
-        .replace(/`([^`]*)`/g, '<span class="text-profit-green">`$1`</span>')
-        // Strings (single quotes)
-        .replace(/'([^']+)'/g, '<span class="text-profit-green">\'$1\'</span>')
-        // Strings (double quotes)
-        .replace(/"([^"]+)"/g, '<span class="text-profit-green">"$1"</span>')
         // Numbers
         .replace(/\b(\d+\.?\d*)\b/g, '<span class="text-warning-orange">$1</span>');
     }
@@ -62,16 +63,17 @@ export function CodeBlock({ language, code }: CodeBlockProps) {
       highlighted = highlighted
         // Comments first
         .replace(/#(.+)$/gm, '<span class="text-neutral-gray italic">#$1</span>')
+        // Strings BEFORE other replacements (to avoid matching HTML attribute quotes)
+        // Single quotes
+        .replace(/'([^']+)'/g, '<span class="text-profit-green">\'$1\'</span>')
+        // Double quotes
+        .replace(/"([^"]+)"/g, '<span class="text-profit-green">"$1"</span>')
         // Keywords
         .replace(/\b(import|from|def|class|return|if|else|elif|for|while|try|except|with|as|pass|break|continue|lambda|yield|raise|assert|finally)\b/g, '<span class="text-rebellious font-semibold">$1</span>')
         // Built-in functions and modules
         .replace(/\b(requests|json|print|len|str|int|float|list|dict|set|tuple|range)\b/g, '<span class="text-trust-blue">$1</span>')
         // Function calls
         .replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/g, '<span class="text-warning-orange">$1</span>(')
-        // Strings (single quotes)
-        .replace(/'([^']+)'/g, '<span class="text-profit-green">\'$1\'</span>')
-        // Strings (double quotes)
-        .replace(/"([^"]+)"/g, '<span class="text-profit-green">"$1"</span>')
         // Numbers
         .replace(/\b(\d+\.?\d*)\b/g, '<span class="text-warning-orange">$1</span>');
     }
