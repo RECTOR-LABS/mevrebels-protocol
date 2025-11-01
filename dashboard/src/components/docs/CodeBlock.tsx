@@ -80,16 +80,17 @@ export function CodeBlock({ language, code }: CodeBlockProps) {
       highlighted = highlighted
         // Comments first
         .replace(/#(.+)$/gm, '<span class="text-neutral-gray italic">#$1</span>')
+        // Strings BEFORE other replacements (to avoid matching HTML attribute quotes)
+        // Single quotes
+        .replace(/'([^']+)'/g, '<span class="text-profit-green">\'$1\'</span>')
+        // Double quotes
+        .replace(/"([^"]+)"/g, '<span class="text-profit-green">"$1"</span>')
         // Commands at start of line
         .replace(/^(curl|npm|git|docker|cd|ls|mkdir|cat|echo|chmod|chown|grep|find|sed|awk|tar|zip|unzip|wget)\b/gm, '<span class="text-rebellious font-semibold">$1</span>')
         // Flags and options
         .replace(/\s(-[a-zA-Z0-9-]+)/g, ' <span class="text-warning-orange">$1</span>')
-        // URLs
-        .replace(/(https?:\/\/[^\s'"]+)/g, '<span class="text-trust-blue underline">$1</span>')
-        // Strings (single quotes)
-        .replace(/'([^']+)'/g, '<span class="text-profit-green">\'$1\'</span>')
-        // Strings (double quotes)
-        .replace(/"([^"]+)"/g, '<span class="text-profit-green">"$1"</span>');
+        // URLs (after strings, so URLs in quotes stay green)
+        .replace(/(https?:\/\/[^\s'"<]+)/g, '<span class="text-trust-blue underline">$1</span>');
     }
 
     return highlighted;
