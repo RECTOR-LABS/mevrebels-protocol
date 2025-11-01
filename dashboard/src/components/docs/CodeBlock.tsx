@@ -40,15 +40,15 @@ export function CodeBlock({ language, code }: CodeBlockProps) {
 
     if (lang === 'javascript' || lang === 'typescript') {
       highlighted = highlighted
-        // Comments first (to avoid highlighting keywords in comments)
-        .replace(/\/\/(.+)$/gm, '<span class="text-neutral-gray italic">//$1</span>')
-        // Strings BEFORE other replacements (to avoid matching HTML attribute quotes)
+        // Strings FIRST (before anything else to protect URLs and content)
         // Template literals (backticks)
         .replace(/`([^`]*)`/g, '<span class="text-profit-green">`$1`</span>')
         // Single quotes
         .replace(/'([^']+)'/g, '<span class="text-profit-green">\'$1\'</span>')
         // Double quotes
         .replace(/"([^"]+)"/g, '<span class="text-profit-green">"$1"</span>')
+        // Comments (only match // at start of line with optional whitespace, not in URLs)
+        .replace(/^(\s*)\/\/(.+)$/gm, '$1<span class="text-neutral-gray italic">//$2</span>')
         // Keywords
         .replace(/\b(const|let|var|function|async|await|return|if|else|for|while|import|export|from|class|new|try|catch|switch|case|break|continue|typeof|instanceof)\b/g, '<span class="text-rebellious font-semibold">$1</span>')
         // Built-in objects and functions
