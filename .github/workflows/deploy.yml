@@ -107,14 +107,31 @@ jobs:
             if curl -f http://localhost:$STANDBY_PORT > /dev/null 2>&1; then
               echo "$STANDBY is healthy. Switching traffic..."
 
-              # Stop and remove active container
+              # Update nginx to point to standby container
+              echo "Updating nginx configuration to port $STANDBY_PORT..."
+              sudo sed -i "s/proxy_pass http:\/\/localhost:[0-9]*;/proxy_pass http:\/\/localhost:$STANDBY_PORT;/" /etc/nginx/sites-available/mevrebels-dashboard
+
+              # Test nginx configuration
+              if sudo nginx -t; then
+                echo "Nginx configuration is valid. Reloading..."
+                sudo systemctl reload nginx
+                echo "Nginx successfully reloaded and pointing to $STANDBY on port $STANDBY_PORT"
+              else
+                echo "ERROR: Nginx configuration test failed. Rolling back..."
+                docker stop mevrebels-$STANDBY || true
+                docker rm mevrebels-$STANDBY || true
+                exit 1
+              fi
+
+              # Stop and remove old active container
+              echo "Stopping old container: $ACTIVE"
               docker stop mevrebels-$ACTIVE || true
               docker rm mevrebels-$ACTIVE || true
 
               # Ensure standby is running
               docker compose up -d mevrebels-$STANDBY
 
-              echo "Deployment successful! Traffic switched to $STANDBY"
+              echo "Deployment successful! Traffic switched to $STANDBY (port $STANDBY_PORT)"
             else
               echo "Health check failed for $STANDBY. Rolling back..."
               docker stop mevrebels-$STANDBY || true
