@@ -7,6 +7,19 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    // Syntax highlighting colors (used in CodeBlock component via dangerouslySetInnerHTML)
+    'text-rebellious',
+    'text-rebellious-red',
+    'text-trust-blue',
+    'text-profit-green',
+    'text-warning-orange',
+    'text-neutral-gray',
+    'text-white',
+    'font-semibold',
+    'italic',
+    'underline',
+  ],
   theme: {
     extend: {
       colors: {
