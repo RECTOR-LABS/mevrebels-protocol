@@ -561,7 +561,7 @@ export default function PitchDeckPage() {
             </ScrollAnimateSection>
 
             <ScrollAnimateSection>
-              <VideoPlayer videoUrl="https://www.youtube.com/embed/YOUR_VIDEO_ID" />
+              <VideoPlayer videoUrl="https://www.youtube.com/embed/bwvPve8o-84" />
             </ScrollAnimateSection>
 
             {/* Video Stats */}
