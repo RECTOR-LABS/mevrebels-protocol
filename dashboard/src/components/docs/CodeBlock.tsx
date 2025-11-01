@@ -39,24 +39,37 @@ export function CodeBlock({ language, code }: CodeBlockProps) {
     }
 
     if (lang === 'javascript' || lang === 'typescript') {
+      // Use placeholder tokens to prevent regex interference
       highlighted = highlighted
-        // Strings FIRST (before anything else to protect URLs and content)
-        // Template literals (backticks)
-        .replace(/`([^`]*)`/g, '<span class="text-profit-green">`$1`</span>')
-        // Single quotes
-        .replace(/'([^']+)'/g, '<span class="text-profit-green">\'$1\'</span>')
-        // Double quotes
-        .replace(/"([^"]+)"/g, '<span class="text-profit-green">"$1"</span>')
-        // Comments (only match // at start of line with optional whitespace, not in URLs)
-        .replace(/^(\s*)\/\/(.+)$/gm, '$1<span class="text-neutral-gray italic">//$2</span>')
+        // Strings FIRST (use markers to avoid interference)
+        .replace(/`([^`]*)`/g, '§§§STR_START§§§`$1`§§§STR_END§§§')
+        .replace(/'([^']+)'/g, '§§§STR_START§§§\'$1\'§§§STR_END§§§')
+        .replace(/"([^"]+)"/g, '§§§STR_START§§§"$1"§§§STR_END§§§')
+        // Comments
+        .replace(/^(\s*)\/\/(.+)$/gm, '$1§§§CMT_START§§§//$2§§§CMT_END§§§')
         // Keywords
-        .replace(/\b(const|let|var|function|async|await|return|if|else|for|while|import|export|from|class|new|try|catch|switch|case|break|continue|typeof|instanceof)\b/g, '<span class="text-rebellious font-semibold">$1</span>')
-        // Built-in objects and functions
-        .replace(/\b(fetch|console|JSON|WebSocket|document|window|Math|Date|Array|Object|Promise|Error)\b/g, '<span class="text-trust-blue">$1</span>')
+        .replace(/\b(const|let|var|function|async|await|return|if|else|for|while|import|export|from|class|new|try|catch|switch|case|break|continue|typeof|instanceof)\b/g, '§§§KW_START§§§$1§§§KW_END§§§')
+        // Built-in objects
+        .replace(/\b(fetch|console|JSON|WebSocket|document|window|Math|Date|Array|Object|Promise|Error)\b/g, '§§§OBJ_START§§§$1§§§OBJ_END§§§')
         // Function calls
-        .replace(/\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/g, '<span class="text-warning-orange">$1</span>(')
+        .replace(/\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/g, '§§§FN_START§§§$1§§§FN_END§§§(')
         // Numbers
-        .replace(/\b(\d+\.?\d*)\b/g, '<span class="text-warning-orange">$1</span>');
+        .replace(/\b(\d+\.?\d*)\b/g, '§§§NUM_START§§§$1§§§NUM_END§§§');
+
+      // Replace markers with actual HTML
+      highlighted = highlighted
+        .replace(/§§§STR_START§§§/g, '<span class="text-profit-green">')
+        .replace(/§§§STR_END§§§/g, '</span>')
+        .replace(/§§§CMT_START§§§/g, '<span class="text-neutral-gray italic">')
+        .replace(/§§§CMT_END§§§/g, '</span>')
+        .replace(/§§§KW_START§§§/g, '<span class="text-rebellious font-semibold">')
+        .replace(/§§§KW_END§§§/g, '</span>')
+        .replace(/§§§OBJ_START§§§/g, '<span class="text-trust-blue">')
+        .replace(/§§§OBJ_END§§§/g, '</span>')
+        .replace(/§§§FN_START§§§/g, '<span class="text-warning-orange">')
+        .replace(/§§§FN_END§§§/g, '</span>')
+        .replace(/§§§NUM_START§§§/g, '<span class="text-warning-orange">')
+        .replace(/§§§NUM_END§§§/g, '</span>');
     }
 
     if (lang === 'python') {
