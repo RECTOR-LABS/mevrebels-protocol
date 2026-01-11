@@ -36,7 +36,7 @@ pub struct InitializeVault<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn handler(ctx: Context<InitializeVault>) -> Result<()> {
+pub(crate) fn handler(ctx: Context<InitializeVault>) -> Result<()> {
     let vault = &mut ctx.accounts.vault;
     let profit_config = &mut ctx.accounts.profit_config;
 

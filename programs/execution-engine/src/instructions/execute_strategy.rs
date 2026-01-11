@@ -1,7 +1,6 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token::{Token, TokenAccount};
 use crate::state::*;
-use crate::constants::*;
 use crate::error::ExecutionError;
 use dao_governance::{
     program::DaoGovernance,
@@ -96,7 +95,7 @@ pub struct StrategyExecuted {
     pub timestamp: i64,
 }
 
-pub fn handler(
+pub(crate) fn handler(
     ctx: Context<ExecuteStrategy>,
     borrow_amount: u64,
     min_profit: u64,
@@ -205,9 +204,6 @@ pub fn handler(
         treasury_share,
         &[&[ExecutionVault::SEEDS_PREFIX, &[vault_bump]]],
     )?;
-
-    // Drop mutable borrow before CPI
-    drop(vault);
 
     // CPI to DAO governance to record treasury deposit
     deposit_to_dao_treasury(

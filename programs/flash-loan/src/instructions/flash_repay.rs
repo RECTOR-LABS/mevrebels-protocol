@@ -37,7 +37,7 @@ pub struct FlashRepay<'info> {
     pub token_program: Program<'info, Token>,
 }
 
-pub fn handler(ctx: Context<FlashRepay>, amount_borrowed: u64) -> Result<()> {
+pub(crate) fn handler(ctx: Context<FlashRepay>, amount_borrowed: u64) -> Result<()> {
     let pool = &mut ctx.accounts.pool;
 
     // Verify flash loan is active

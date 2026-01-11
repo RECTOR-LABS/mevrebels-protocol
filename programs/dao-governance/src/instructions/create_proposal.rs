@@ -47,7 +47,7 @@ pub struct CreateProposal<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn handler(
+pub(crate) fn handler(
     ctx: Context<CreateProposal>,
     strategy_to_approve: Pubkey,
     description: String,

@@ -24,7 +24,7 @@ pub struct DepositTreasury<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn handler(ctx: Context<DepositTreasury>, amount: u64) -> Result<()> {
+pub(crate) fn handler(ctx: Context<DepositTreasury>, amount: u64) -> Result<()> {
     let treasury = &mut ctx.accounts.treasury;
 
     // Transfer SOL to treasury PDA

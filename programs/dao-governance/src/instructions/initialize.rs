@@ -100,7 +100,7 @@ pub struct Initialize<'info> {
     pub rent: Sysvar<'info, Rent>,
 }
 
-pub fn handler(ctx: Context<Initialize>) -> Result<()> {
+pub(crate) fn handler(ctx: Context<Initialize>) -> Result<()> {
     let config = &mut ctx.accounts.governance_config;
     let treasury = &mut ctx.accounts.treasury;
 
@@ -194,7 +194,7 @@ pub struct DistributeTokens<'info> {
     pub token_program: Program<'info, Token>,
 }
 
-pub fn distribute_tokens(ctx: Context<DistributeTokens>) -> Result<()> {
+pub(crate) fn distribute_tokens(ctx: Context<DistributeTokens>) -> Result<()> {
     let config = &ctx.accounts.governance_config;
 
     require!(

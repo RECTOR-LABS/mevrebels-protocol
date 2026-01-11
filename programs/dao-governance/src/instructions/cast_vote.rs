@@ -57,7 +57,7 @@ pub struct CastVote<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn handler(
+pub(crate) fn handler(
     ctx: Context<CastVote>,
     vote_choice: VoteChoice,
 ) -> Result<()> {

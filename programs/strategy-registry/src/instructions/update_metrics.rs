@@ -34,7 +34,7 @@ pub struct UpdateMetrics<'info> {
     pub executor: Signer<'info>,
 }
 
-pub fn handler(
+pub(crate) fn handler(
     ctx: Context<UpdateMetrics>,
     profit: u64,
     success: bool,
@@ -106,7 +106,7 @@ pub struct GetStrategyStats<'info> {
     pub strategy: Account<'info, StrategyAccount>,
 }
 
-pub fn get_strategy_stats(ctx: Context<GetStrategyStats>) -> Result<StrategyStats> {
+pub(crate) fn get_strategy_stats(ctx: Context<GetStrategyStats>) -> Result<StrategyStats> {
     let strategy = &ctx.accounts.strategy;
     Ok(StrategyStats::from(&**strategy))
 }

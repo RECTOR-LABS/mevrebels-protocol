@@ -99,7 +99,7 @@ pub struct InitializeAdmin<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn initialize_admin(ctx: Context<InitializeAdmin>) -> Result<()> {
+pub(crate) fn initialize_admin(ctx: Context<InitializeAdmin>) -> Result<()> {
     let admin_config = &mut ctx.accounts.admin_config;
     admin_config.admin = ctx.accounts.admin.key();
     admin_config.bump = ctx.bumps.admin_config;
@@ -108,7 +108,7 @@ pub fn initialize_admin(ctx: Context<InitializeAdmin>) -> Result<()> {
     Ok(())
 }
 
-pub fn approve_strategy(ctx: Context<ApproveStrategy>) -> Result<()> {
+pub(crate) fn approve_strategy(ctx: Context<ApproveStrategy>) -> Result<()> {
     let strategy = &mut ctx.accounts.strategy;
     let clock = Clock::get()?;
 
@@ -142,7 +142,7 @@ pub fn approve_strategy(ctx: Context<ApproveStrategy>) -> Result<()> {
     Ok(())
 }
 
-pub fn reject_strategy(ctx: Context<RejectStrategy>) -> Result<()> {
+pub(crate) fn reject_strategy(ctx: Context<RejectStrategy>) -> Result<()> {
     let strategy = &mut ctx.accounts.strategy;
     let clock = Clock::get()?;
 

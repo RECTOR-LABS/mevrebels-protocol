@@ -2,7 +2,6 @@ use anchor_lang::prelude::*;
 use strategy_registry::{
     program::StrategyRegistry,
     cpi::accounts::ApproveStrategy as ApproveStrategyAccounts,
-    StrategyAccount,
 };
 use crate::{
     constants::*,
@@ -50,7 +49,7 @@ pub struct ExecuteProposal<'info> {
     pub executor: Signer<'info>,
 }
 
-pub fn handler(ctx: Context<ExecuteProposal>) -> Result<()> {
+pub(crate) fn handler(ctx: Context<ExecuteProposal>) -> Result<()> {
     let proposal = &mut ctx.accounts.proposal;
     let config = &ctx.accounts.governance_config;
     let clock = Clock::get()?;

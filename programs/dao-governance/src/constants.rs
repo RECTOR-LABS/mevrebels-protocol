@@ -1,5 +1,3 @@
-use anchor_lang::prelude::*;
-
 /// REBEL Token Configuration
 pub const REBEL_TOTAL_SUPPLY: u64 = 100_000_000 * 1_000_000_000; // 100M tokens with 9 decimals
 pub const REBEL_DECIMALS: u8 = 9;

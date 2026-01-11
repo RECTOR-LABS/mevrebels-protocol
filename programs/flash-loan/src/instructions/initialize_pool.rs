@@ -45,7 +45,7 @@ pub struct InitializePool<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn handler(ctx: Context<InitializePool>, fee_bps: u16) -> Result<()> {
+pub(crate) fn handler(ctx: Context<InitializePool>, fee_bps: u16) -> Result<()> {
     require!(fee_bps <= MAX_FEE_BPS, FlashLoanError::FeeTooHigh);
 
     let pool = &mut ctx.accounts.pool;

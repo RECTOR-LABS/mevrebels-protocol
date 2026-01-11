@@ -42,7 +42,7 @@ pub struct FlashBorrow<'info> {
     // - These will be passed through to the CPI call
 }
 
-pub fn handler(ctx: Context<FlashBorrow>, amount: u64) -> Result<()> {
+pub(crate) fn handler(ctx: Context<FlashBorrow>, amount: u64) -> Result<()> {
     // Validate borrow amount
     require!(
         amount >= MIN_BORROW_AMOUNT,

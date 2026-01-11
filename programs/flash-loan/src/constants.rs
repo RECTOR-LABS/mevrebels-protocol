@@ -1,4 +1,4 @@
-use anchor_lang::prelude::*;
+use anchor_lang::prelude::Pubkey;
 
 /// WSOL (Wrapped SOL) mint address
 /// Native SOL wrapped as SPL token for flash loan transfers

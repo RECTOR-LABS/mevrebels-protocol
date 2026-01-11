@@ -28,7 +28,7 @@ pub struct DepositLiquidity<'info> {
     pub token_program: Program<'info, Token>,
 }
 
-pub fn handler(ctx: Context<DepositLiquidity>, amount: u64) -> Result<()> {
+pub(crate) fn handler(ctx: Context<DepositLiquidity>, amount: u64) -> Result<()> {
     // Transfer WSOL tokens from depositor to pool
     token::transfer(
         CpiContext::new(

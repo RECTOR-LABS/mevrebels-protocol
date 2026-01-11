@@ -38,7 +38,7 @@ pub struct CreateStrategy<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn handler(
+pub(crate) fn handler(
     ctx: Context<CreateStrategy>,
     strategy_id: u64,
     dexs: Vec<DexType>,
