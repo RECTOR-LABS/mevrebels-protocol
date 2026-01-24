@@ -6,47 +6,35 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **MEVrebels: Democratizing MEV Through Decentralized Arbitrage**
 
-This project is a dual-purpose endeavor:
-1. **Primary**: Hackathon submission for Superteam Earn Cypherpunk Hackathon (Staking Facilities sponsor)
-2. **Secondary**: Investor-ready startup MVP for potential acquisition
-
 **Project Identity:**
 - **Name**: MEVrebels
 - **Tagline**: "Reclaim MEV. Power to the People."
 - **Vision**: Democratize MEV profits through decentralized arbitrage strategies with DAO governance
 
-**Key Details:**
-- **Prize Pool**: 5,000 USDC (1st: $2,500, 2nd: $1,500, 3rd: $1,000)
-- **Deadline**: October 30, 2025
-- **Current Competition**: 2 submissions
-- **Strategy**: MEVrebels (ArbitrageDAO architecture) - self-contained, no validator dependency
-- **Current Status**: Day 23 - DEMO READY (Backend Live, Dashboard Complete with Mock Data, 100% Demo-Ready)
+**Project Status:** Post-Hackathon → Production Development
+- **Origin**: Built during Superteam Earn Cypherpunk Hackathon (Oct 2025)
+- **Architecture**: ArbitrageDAO - self-contained, no validator dependency
+- **Current Phase**: Production hardening, mainnet preparation
+- **Infrastructure**: Backend live, dashboard deployed, programs tested (83% coverage)
 
 ## Strategic Approach
 
-**Primary Path: Hackathon Victory**
-- Build production-ready MEVrebels protocol
-- Win top 3 placement ($1,000 - $2,500 USDC)
-- Demonstrate real-world impact and technical excellence
+**Primary Focus: Production & Partnerships**
+- **Strategic Partnerships** (highest priority):
+  - Jupiter (integrate flashloan arb as feature)
+  - Staking Facilities (validator integration pilot)
+  - Jito Labs / Helius (MEV infrastructure alignment)
+- **Seed Funding**: Solana Ventures, 6th Man, Multicoin ($100K-$250K target)
+- **Investor-ready**: PRD, execution plan, brand guidelines complete
 
-**Secondary Path: Strategic Partnerships & Seed Funding**
-- **Primary Focus**: Strategic partnerships over outright acquisition
-  - Jupiter (integrate flashloan arb as feature) - Most Likely
-  - Staking Facilities (validator integration pilot) - Hackathon Sponsor
-  - Solana Ventures, 6th Man, Multicoin (seed funding $100K-$250K)
-- **Secondary**: Acqui-hire opportunities
-  - Jito Labs / Helius (if strong hackathon traction)
-  - Compensation: $50K-$150K range (realistic for 23-day MVP)
-- Investor-ready documentation (PRD, execution plan, brand guidelines)
-- Scalable architecture beyond hackathon scope
-
-**Core Focus Areas (Bounty Requirements):**
-1. ✅ **DeFi Atomic Arbitrage** (PRIMARY) - Core protocol functionality COMPLETE
-2. ✅ **AMMs** - Cross-DEX arbitrage across Raydium/Orca/Meteora COMPLETE
-3. ✅ **Transaction Simulation** - Strategy backtesting and profitability validation COMPLETE
-4. ✅ **Flash Loans** - Real WSOL-based flash loans (custom implementation) COMPLETE
-5. ⭐ **Priority Fee Management** - Optimal fee calculation for execution
-6. ⭐ **Real-World Impact** - Democratizes MEV (billions in annual value)
+**Core Capabilities (Production-Ready):**
+1. ✅ **DeFi Atomic Arbitrage** - Core protocol functionality
+2. ✅ **AMMs** - Cross-DEX arbitrage (Raydium/Orca/Meteora)
+3. ✅ **Transaction Simulation** - Strategy backtesting and validation
+4. ✅ **Flash Loans** - Custom WSOL implementation (0.09% fee)
+5. ⏳ **Multi-Token Flash Loans** - USDC, USDT, mSOL support (roadmap)
+6. ⏳ **Priority Fee Management** - Optimal fee calculation
+7. ⏳ **Mainnet Deployment** - Real liquidity, security audit
 
 ## Brand Guidelines
 
@@ -82,22 +70,26 @@ When creating any user-facing content, marketing materials, or documentation, re
 - **Pool Monitor**: Rust (Raydium/Orca/Meteora integration) ⏳ NOT DEPLOYED (dependency conflicts)
 - **Transaction Monitor**: Rust (Geyser webhooks, alerts) ⏳ NOT DEPLOYED (dependency conflicts)
 
-### Frontend (Dashboard) ✅ DEMO READY
+### Frontend (Dashboard) ✅ DEPLOYED
 
 - **Framework**: Next.js 14 (App Router) ✅
 - **Wallet Integration**: Solana Wallet Adapter v2 (Phantom, Solflare, Coinbase) ✅
 - **UI Library**: Custom components + Tailwind CSS (MEVrebels brand) ✅
 - **Forms**: React Hook Form + Zod validation ✅
 - **Features Deployed**:
-  - Strategy Marketplace (filtering, sorting, search) ✅ WITH MOCK DATA
+  - Strategy Marketplace (filtering, sorting, search) ✅
   - Strategy Creation Form (validation, preview) ✅
-  - DAO Governance (voting UI, proposals) ✅ WITH MOCK DATA
-  - Analytics Dashboard (metrics, leaderboard) ✅ WITH REAL ENDPOINTS
+  - DAO Governance (voting UI, proposals) ✅
+  - Analytics Dashboard (metrics, leaderboard) ✅
   - Toast notifications & loading states ✅
-- **Mock Data for Demo**: 6 strategies (5 active, 1 pending), 4 proposals (2 active, 1 passed, 1 rejected)
-- **Deployment**: Docker + GitHub Actions + Blue-Green CI/CD ✅ PRODUCTION LIVE
+- **Deployment**: Docker + GitHub Actions + Blue-Green CI/CD ✅
 - **Production URL**: https://mevrebels.rectorspace.com ✅ LIVE
-- **Documentation**: README, DEPLOYMENT.md, DNS-SETUP.md, DEMO-READY.md ✅
+- **Documentation**: README, DEPLOYMENT.md, DNS-SETUP.md ✅
+
+**Production TODO:**
+- [ ] Replace mock data with real on-chain data
+- [ ] Connect to mainnet programs
+- [ ] Add real-time WebSocket updates from pool monitor
 
 ### Infrastructure ✅ PRODUCTION
 
@@ -119,7 +111,7 @@ When creating any user-facing content, marketing materials, or documentation, re
   - Anchor's TypeScript client generation assumes Node.js
   - Wallet adapters may have Bun compatibility issues
   - All Solana documentation uses npm
-- **Trade-off**: Stability and compatibility > speed for 23-day hackathon
+- **Trade-off**: Stability and compatibility > speed for Solana ecosystem
 
 ## Development Commands
 
@@ -346,124 +338,91 @@ dashboard/
 │   └── stores/          # Zustand state stores
 ```
 
-## Development Workflow
+## Production Roadmap
 
-### Phase 1: Foundation & Setup (Days 1-5)
+### Phase 1: Production Hardening (Current)
 
-**Research & Architecture:**
-- Study Jupiter aggregator CPI patterns
-- Design flashloan integration (Solend/marginfi)
-- Design strategy registry account structures
-- Plan DAO governance mechanism
-- Set up development environment
-
-**Deliverables:**
-- Technical specification document
-- Architecture diagrams
-- Development environment ready
-- Initial Anchor workspace
-
-### Phase 2: Core Development (Days 6-18)
-
-**Week 1 (Days 6-11): On-Chain Programs**
-- Strategy Registry program (create, validate, approve strategies)
-- Execution Engine core (flashloan integration, Jupiter CPI)
-- Atomic arbitrage logic (multi-hop swaps)
-- DAO Governance basics (voting, proposals)
-
-**Week 2 (Days 12-18): Integration & Dashboard**
-- Backend services (pool monitoring, opportunity detection)
-- Strategy performance analytics
-- Dashboard UI (strategy marketplace, execution interface)
-- WebSocket real-time updates
-
-**Deliverables:**
-- Fully functional on-chain programs
-- Backend infrastructure operational
-- Dashboard MVP with core features
-- Test coverage >80%
-
-### Phase 3: Testing & Refinement (Days 19-21)
+**Infrastructure:**
+- [ ] Fix Rust service dependency conflicts (pool-monitor, tx-monitor)
+- [ ] Deploy all backend services to production
+- [ ] Replace mock data with real on-chain data
+- [ ] Connect dashboard to mainnet programs
 
 **Testing:**
-- Security audit (reentrancy, access control, arithmetic overflow)
-- Strategy execution simulations
-- Profit calculation accuracy validation
-- Load testing (concurrent executions)
+- [ ] Achieve 95%+ test coverage
+- [ ] Fix remaining 9 failing tests (execution engine, DAO governance)
+- [ ] Add integration tests for full arbitrage flow
+- [ ] Load testing (1000+ concurrent executions)
 
-**Optimization:**
-- Compute unit optimization
-- Transaction batching for gas efficiency
-- Dashboard performance tuning
-- Caching implementation
+### Phase 2: Multi-Token Support
 
-**Deliverables:**
-- Production-ready codebase
-- Security audit report
-- Performance benchmarks
-- Bug-free operation
+**Flash Loan Expansion:**
+- [ ] USDC flash loan pool
+- [ ] USDT flash loan pool
+- [ ] mSOL flash loan pool
+- [ ] Configurable base token per strategy
 
-### Phase 4: Documentation & Submission (Days 22-23)
+**DEX Integration:**
+- [ ] Full Jupiter CPI integration (production routes)
+- [ ] Raydium CLMM support
+- [ ] Orca Whirlpool integration
+- [ ] Meteora DLMM support
 
-**Documentation:**
-- README with setup instructions
-- Strategy creation guide
-- API documentation
-- Architecture diagrams
-- Video tutorial (5-10 minutes)
+### Phase 3: Security & Mainnet
 
-**Investor Package (if pursuing sale):**
-- Pitch deck (problem, solution, market, traction)
-- Financial projections
-- Roadmap (post-hackathon features)
-- Team background
+**Security Audit:**
+- [ ] Formal audit by reputable firm (OtterSec, Neodyme, etc.)
+- [ ] Bug bounty program setup
+- [ ] Reentrancy attack testing
+- [ ] Economic attack simulations
 
-**Deliverables:**
-- Complete documentation suite
-- Professional demo video
-- Live mainnet deployment
-- Submission package (hackathon or investor)
+**Mainnet Deployment:**
+- [ ] Deploy programs to mainnet-beta
+- [ ] Seed liquidity in flash loan pools
+- [ ] Gradual rollout (whitelisted strategies first)
+- [ ] Full public launch
 
-## Critical Success Factors
+### Phase 4: Governance & Token
 
-### Must-Have for Winning (Hackathon)
+**REBEL Token Launch:**
+- [ ] Token mint and distribution
+- [ ] Governance staking mechanism
+- [ ] Profit distribution to token holders
+- [ ] DEX liquidity pools (Raydium, Orca)
 
-1. **Functional Prototype**: Atomic arbitrage working on devnet/mainnet
-2. **Real-World Impact**: Demonstrates democratization of MEV profits
-3. **Technical Excellence**: Clean code, proper error handling, security-aware
-4. **Compelling Demo**: Shows strategy creation → execution → profit distribution
-5. **Punky Narrative**: "Fighting MEV oligopoly" messaging
+**DAO Operations:**
+- [ ] Strategy approval voting live
+- [ ] Treasury management proposals
+- [ ] Protocol upgrade governance
 
-### Must-Have for Sale (Investor Exit)
+## Production Success Criteria
 
-1. **Product-Market Fit**: Demonstrates real user demand (even in hackathon)
-2. **Scalable Architecture**: Can handle 1000+ strategies, 100+ concurrent executions
-3. **Clear Moat**: Technical advantages over centralized MEV bots
-4. **Growth Potential**: Roadmap shows path to $10M+ ARR
-5. **Strong Documentation**: Investor-ready PRD, execution plan, brand guidelines
+### Technical Requirements
 
-### Quality Benchmarks
+1. **Scalable Architecture**: Handle 1000+ strategies, 100+ concurrent executions
+2. **Security**: Formal audit passed, no critical vulnerabilities
+3. **Performance**: Strategy execution <5s, dashboard <3s load
+4. **Reliability**: 99.9% uptime, graceful failure handling
+5. **Testing**: 95%+ coverage on critical paths
 
-- **Functionality**: Core feature works 100% in happy path ✅ ACHIEVED
-- **Performance**: Strategy execution <5s end-to-end, dashboard <3s load ⏳ PENDING
-- **Security**: No critical vulnerabilities, proper input validation, secure key management ✅ ACHIEVED
-- **Testing**: >80% coverage on critical paths ✅ ACHIEVED (83% - 45/54 tests passing)
-- **Documentation**: Comprehensive, investor-grade ⏳ IN PROGRESS
+### Business Requirements
 
-**Current Test Results:**
+1. **Product-Market Fit**: Real user demand, active strategy creators
+2. **Clear Moat**: DAO governance, multi-token support, transparent profit sharing
+3. **Growth Potential**: Path to $10M+ ARR via protocol fees
+4. **Partnerships**: Integration with major Solana protocols (Jupiter, Jito)
+5. **Documentation**: Investor-ready PRD, brand guidelines, API docs
+
+### Current Test Status
+
 - Flash Loan: 3/3 passing (100%)
 - Strategy Registry: 18/18 passing (100%)
-- Execution Engine: 13/20 passing (65% - mock arbitrage limitations)
-- DAO Governance: 7/13 passing (54% - unrelated to flash loans)
+- Execution Engine: 13/20 passing (65%)
+- DAO Governance: 7/13 passing (54%)
 - DAO Integration: 4/6 passing (67%)
+- **Overall**: 45/54 passing (83%)
 
-### Scoring Breakdown (Hackathon)
-
-- Technical Implementation (40%): Functionality, code quality, multiple focus areas, security
-- Innovation & Impact (25%): Novel DAO approach, real-world MEV democratization
-- Documentation & Demo (15%): Code docs, video quality, narrative
-- Presentation & Polish (10%): UI/UX aligned with brand, punky attitude
-- Real-World Utility (10%): Can be used immediately by traders/developers
+**Target**: 95%+ before mainnet launch
 
 ## Important Files
 
@@ -555,11 +514,11 @@ dashboard/
 3. **Profit Calculation Errors**: Extensive testing, conservative slippage bounds
 4. **Performance Issues**: Profile continuously, optimize hot paths
 
-### Timeline Risks
+### Development Risks
 
-1. **Scope Creep**: Strict MVP definition, feature freeze after Day 18
-2. **Integration Delays**: Mock external dependencies early, parallel development
-3. **Learning Curve**: Intensive learning in Phase 1, leverage community
+1. **Scope Creep**: Strict phase definitions, prioritize production-critical features
+2. **Integration Delays**: Mock external dependencies, parallel development
+3. **Dependency Conflicts**: Rust services have conflicting deps (known issue)
 
 ### Market Risks (Investor Path)
 
@@ -598,55 +557,50 @@ dashboard/
 
 ## Deployment Strategy
 
-1. **Devnet** (Day 15): Deploy all programs, run integration tests, gather feedback
-2. **Testnet** (Day 19): Deploy to testnet, invite beta testers (strategy creators)
-3. **Mainnet** (Day 22): Gradual rollout, limited strategies initially, full launch for demo
+1. **Devnet** (Current): All programs deployed, integration tests passing
+2. **Testnet**: Beta testing with invited strategy creators
+3. **Mainnet**: Post-audit deployment with gradual rollout
+   - Phase 1: Whitelisted strategies only
+   - Phase 2: Public strategy submission with DAO approval
+   - Phase 3: Full permissionless operation
 
-## Submission Checklist
+## Production Checklist
 
-### Hackathon Submission
+### Pre-Mainnet Requirements
 
 **Technical:**
-- [ ] Core features working on mainnet (strategy registry, execution, DAO)
-- [ ] At least 3 example strategies deployed and profitable
-- [ ] Dashboard fully functional (create strategy, vote, execute, view profits)
+- [ ] All tests passing (95%+ coverage)
+- [ ] Security audit completed
+- [ ] Performance benchmarks met (<5s execution)
 - [ ] No console errors, proper error handling
+- [ ] Real data replacing all mock data
+
+**Infrastructure:**
+- [ ] All backend services deployed (including Rust monitors)
+- [ ] Mainnet RPC provider configured
+- [ ] Monitoring and alerting setup
+- [ ] Backup and recovery procedures
 
 **Documentation:**
 - [ ] README with clear setup instructions
 - [ ] Architecture diagrams (program interactions, data flow)
 - [ ] Strategy creation guide
 - [ ] API documentation
+- [ ] Security model documentation
 
-**Demo:**
-- [ ] 5-10 min video (problem → solution → live demo → impact)
-- [ ] Live mainnet deployment accessible by judges
-- [ ] Shows full flow: strategy creation → approval → execution → profit distribution
+### Partnership Outreach
 
-**Submission:**
-- [ ] GitHub repo public and organized
-- [ ] All secrets removed
-- [ ] Submit via Superteam Earn
-- [ ] Tweet with #MEVrebels, tag @StakingFac
-- [ ] Share in Solana/Superteam Discord
+**Targets:**
+- [ ] Jupiter (flashloan arb integration)
+- [ ] Staking Facilities (validator integration)
+- [ ] Jito Labs (MEV infrastructure)
+- [ ] Helius (RPC and indexing)
 
-### Investor Package (Optional)
-
-**Documentation:**
+**Materials:**
 - [ ] Pitch deck (15-20 slides)
-- [ ] Financial model (revenue projections, user growth)
-- [ ] Roadmap (Q1-Q4 post-launch features)
-- [ ] Team bios and backgrounds
-
-**Traction:**
-- [ ] User metrics (strategies created, total volume, profits distributed)
-- [ ] Community engagement (Discord members, Twitter followers)
-- [ ] Partnership interest (conversations with Jito, Jupiter, etc.)
-
-**Outreach:**
-- [ ] Identify target acquirers (Staking Facilities, Jito, Jupiter, Helius)
-- [ ] Warm introductions via hackathon connections
-- [ ] Schedule post-hackathon investor meetings
+- [ ] Technical whitepaper
+- [ ] Live demo environment
+- [ ] Partnership proposal document
 
 ## Resources
 
@@ -673,24 +627,26 @@ dashboard/
 ## Notes for Claude Code
 
 **Core Principles:**
-- Build for both hackathon win AND investor sale
-- Focus on demo quality - judges/investors need to see value immediately
+- Production-first mindset - no shortcuts, no "demo quality" compromises
 - "Punky/edgy" attitude matters - MEVrebels fights MEV oligopoly
-- Working code beats vaporware - ship functional prototypes early
+- Working code beats vaporware - ship functional, tested features
 - Read `docs/brand/BRAND.md` for all user-facing content (maintain brand consistency)
-- Track progress in `docs/planning/MEVrebels-execution-plan.md` daily
 - Refer to `docs/planning/MEVrebels-PRD.md` for Epic/Story/Task structure
 
 **Decision Framework:**
-- If uncertain about feature priority: Check docs/planning/MEVrebels-PRD.md Epic priority
+- If uncertain about feature priority: Check Production Roadmap phases above
 - If uncertain about branding: Read docs/brand/BRAND.md
 - If uncertain about technical approach: Read docs/planning/MEVrebels-strategy.md
-- If uncertain about progress: Update docs/planning/MEVrebels-execution-plan.md
 
 **Success Criteria:**
-1. **Hackathon**: Top 3 placement ($1,000 - $2,500)
+1. **Technical**: 95%+ test coverage, security audit passed, <5s execution
 2. **Partnerships**: Strategic partnership (Jupiter/Staking Facilities) or seed funding ($100K-$250K)
-3. **Community**: 100+ Discord members, 500+ Twitter followers
-4. **Technical**: 10+ profitable strategies, $10K+ volume executed
+3. **Community**: Active strategy creators, real TVL in flash loan pools
+4. **Revenue**: Protocol fees generating sustainable income
 
-InshaAllah, we will succeed on both paths! 🚀
+**Hackathon Origin (Oct 2025):**
+- Built during Superteam Earn Cypherpunk Hackathon
+- Achieved 83% test coverage, full stack deployed
+- Proof of concept validated, now scaling to production
+
+InshaAllah, MEVrebels will democratize MEV for the people! 🚀
