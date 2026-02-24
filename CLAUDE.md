@@ -111,6 +111,52 @@ When creating any user-facing content, marketing materials, or documentation, re
 - **Flash Loans**: Custom WSOL implementation on devnet ✅
 - **Deployment**: Docker Compose with health checks ✅
 
+### VPS Deployment (OFFLINE)
+
+> **Status:** Taken offline 2026-02-24 — dormant since Nov 6, 2025 (~4 months). Freed ~1.9GB disk + 5 containers on shared VPS.
+
+**What was running:**
+
+| Container | Ports | Image |
+|-----------|-------|-------|
+| `mevrebels-api-server` | 3011→3001, 3012→3002 | `mevrebels-backend-api-server:latest` |
+| `mevrebels-postgres` | 5433→5432 | `timescale/timescaledb:latest-pg15` |
+| `mevrebels-redis` | 6380→6379 | `redis:7` |
+| `mevrebels-dashboard-green` | 3021→3000 | `ghcr.io/rector-labs/mevrebels-dashboard:main` |
+| `mevrebels-dashboard-blue` | 3020→3000 | `ghcr.io/rector-labs/mevrebels-dashboard:submission` |
+
+**Data volumes preserved** (not deleted):
+- `mevrebels-backend_postgres_data` — TimescaleDB data
+- `mevrebels-backend_redis_data` — Redis persistence
+
+**Nginx configs preserved** in `/etc/nginx/sites-available/` (symlinks removed from `sites-enabled/`):
+- `mevrebels-api` → api.mevrebels.rectorspace.com
+- `mevrebels-dashboard` → mevrebels.rectorspace.com
+
+**Docker Compose files on VPS:**
+- Backend: `/home/mevrebels/mevrebels-backend/docker-compose.yml`
+- Dashboard: `/home/mevrebels/dashboard/docker-compose.yml`
+
+**How to bring back online:**
+```bash
+# 1. Start backend services (postgres, redis, api)
+sudo bash -c 'cd /home/mevrebels/mevrebels-backend && docker compose up -d'
+
+# 2. Start dashboard (blue-green)
+sudo bash -c 'cd /home/mevrebels/dashboard && docker compose up -d'
+
+# 3. Re-enable nginx configs
+sudo ln -s /etc/nginx/sites-available/mevrebels-api /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/mevrebels-dashboard /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+
+# 4. Verify
+curl https://api.mevrebels.rectorspace.com/health
+curl https://mevrebels.rectorspace.com
+```
+
+**Note:** Images were removed — `docker compose up -d` will re-pull them automatically. Volumes with all data are intact.
+
 ### Package Manager
 
 - **Use npm** (not Bun) for this project
